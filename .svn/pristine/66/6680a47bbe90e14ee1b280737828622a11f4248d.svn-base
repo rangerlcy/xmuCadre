@@ -1,0 +1,77 @@
+package com.cadre.controller.pojo;
+
+import java.util.Date;
+
+import com.cadre.model.utils.DateUtil;
+import com.cadre.pojo.Position;
+import com.cadre.pojo.User;
+
+public class AadPaperItem {
+	private Integer index;
+	private Integer positionId;
+	private Integer userId;
+	private String appointOrRemove;
+	private String type;
+	private String reasion;
+	private String grade;
+	private String remark;
+	private Date actionDay;
+	public Integer getIndex() {
+		return index;
+	}
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
+	
+	
+	public Integer getPositionId() {
+		return positionId;
+	}
+	public void setPositionId(Integer positionId) {
+		this.positionId = positionId;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public String getAppointOrRemove() {
+		return appointOrRemove;
+	}
+	public void setAppointOrRemove(String appointOrRemove) {
+		this.appointOrRemove = appointOrRemove;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getReasion() {
+		return reasion;
+	}
+	public void setReasion(String reasion) {
+		this.reasion = reasion;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public Date getActionDay() {
+		return actionDay;
+	}
+	public void setActionDay(Date actionDay) {
+		this.actionDay = actionDay;
+	}
+	
+
+}

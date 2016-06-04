@@ -1,0 +1,211 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+  <head>
+    	<%@ include file="/common/common.jsp"%>
+		<%@ taglib uri="/WEB-INF/tlds/cadre-tag.tld" prefix="ide" %>
+		<script  type="text/javascript" src="${res}/js/artDialog/artDialog.js?skin=blue"></script>
+		<title>厦门大学干部信息管理系统</title>
+		<link rel="stylesheet" href="${res }/css/style.css" type="text/css"  />
+		<link rel="stylesheet" href="${res }/css/content.css" type="text/css"  />
+		<script type="text/javascript" src="${res}/js/DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="${res}/js/tableType.js"></script>
+  </head>
+  
+  <body>
+    <div class="Info_lists">
+    <div class="form_head"><span>任免信息</span></div>
+    	<c:if test="${roleType=='admin' }">
+		<input type="button" class="btn addBtn" value="添加任免信息" style="margin-left:10px;"/>
+		</c:if>
+		 <input type="button" class="btn superSearchBtn" value="高级查询" style="margin-left:10px;"/> 
+    	<form id="searchAadForm" action="${ctx}/AppointAndDismiss/AppointAndDismissInfo/AppointAndDismissList.do" method="post">
+				<input type="text" id="queryStr" class="txt txtkey" name="queryStr" value="${queryStr }" style="width:220px;"/>
+		    	<input type="text" id="queryStrTemp" class="txt txtkey"  value="发文文号/发文名称/任免类型/姓名" style="width:220px;"/>
+		    	<input type="submit" value="查询" class="btn search_btn" />
+		<div class="AdvantageSearch" style="display:none">	
+			     
+	        发文文号：<input type="text" id="SuperSearchPostingNumber" name="postingNumber"  onkeyup="value=value.replace(/[^\w]/g,'')" maxlength=10 />
+	       发文名称：<input type="text" id="SuperSearchPostingName" name="postingName" onkeyup="value=value.replace(/[^\w\u4E00-\u9FA5 ]/g,'')" maxlength=50/><br />
+	    
+	        发文时间：
+			<select id="SuperPostingDaySelect" name="postingDayOperator">
+				<option value="R">晚于</option>
+				<option value="E" selected>等于</option>
+				<option value="L">早于</option>
+			</select>
+			<input type="text" id="SuperSearchPostingDay" name="postingDay" class="txt Wdate " onfocus="WdatePicker({readOnly:false})"/>
+	   
+	        <br />任免类型：<input type="text" id="SuperSearchWorkingType" name="workingType"  onkeyup="value=value.replace(/[^\w\u4E00-\u9FA5 ,;:：，；。.《》<>\n、]/g,'')" maxlength=120/>
+		<input type="button" id="SuperSearchBtn" value="查询"/><br />
+	</div>
+		    </form>
+		</div>
+    <div>
+    	<table class="tblist">
+				<tr>
+			
+					<td>发文时间</td>
+					<td>发文文号</td>
+					<td>发文名称</td>
+					<td class="c">操作</td>
+				</tr>
+				<c:forEach items="${queryList.result }" var="AAD">
+					<tr>
+						<td><fmt:formatDate value="${AAD.postingDay }" pattern='yyyy-MM-dd'/></td>
+						<td>${AAD.postingNumber }</td>
+						<td>${AAD.postingName }</td>
+						<td class="c" TID="${AAD.id }">
+							<input type="button" class="btn btn_cz detailBtn" value="查看详情" >
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+		 <ide:page page="${queryList }" pageId="AADListPage" searchForm="searchAadForm"></ide:page>
+    </div>
+<script type="text/javascript">
+		//绑定查询输入框事件
+	    function bindQueryTextEvent(){
+	    	if($.trim($("#queryStr").val())==""){
+	            $("#queryStr").hide();
+	            $("#queryStrTemp").show();
+	        } else {
+	            $("#queryStr").show();
+	            $("#queryStrTemp").hide();
+	        }
+	        $("#queryStrTemp").focus(function(){
+	            $(this).hide();
+	            $("#queryStr").show().focus();
+	        });
+	        $("#queryStr").blur(function(){
+	            if($.trim($("#queryStr").val())==""){
+	                $("#queryStr").hide();
+	                $("#queryStrTemp").show();
+	            } 
+	        });
+	    }
+	    //高级搜素打开
+	    var searchAction = 1;
+	    function bindSuperSearchEvent(){
+	    	$(".superSearchBtn").click(function(){
+	    		if(searchAction==1){
+	    		$(".AdvantageSearch").css("display","block");
+	    		$("#queryStrTemp").css("display","none");	    	
+	    		$("#queryStr").css("display","none");	    		
+	    		$(".search_btn").css("display","none");
+	    		$(".superSearchBtn").val("普通查询");
+	    		searchAction = 2;
+	    	}
+	    	else if (searchAction == 2){
+	    		$(".AdvantageSearch").css("display","none");
+	    		$("#queryStrTemp").css("display","none");    	
+	    		$("#queryStr").css("display","inline-block");	   	    		
+	    		$(".search_btn").css("display","inline-block");
+	    		$(".superSearchBtn").val("高级查询");
+	    		searchAction = 1;
+	    	}
+	    	});
+	    }
+	     //高级查找
+		function bindSuperSearchBtn(){
+			$("#SuperSearchBtn").click(function(){
+				//alert($("#querySecondmentForm").attr("id"));
+				$("#searchAadForm").attr("action","${ctx }/AppointAndDismiss/AppointAndDismissInfo/SuperSearchAad.do");
+				//表单验证  万超 要做下可以空 但是有值的话必须要符合 比如数字 
+				$("#searchAadForm").submit();
+			});
+		}
+	    
+	    
+	    //添加操作
+		function bindAddEvent() {
+			$(".addBtn").click(function(){
+				art.dialog.open(
+					"${ctx}/AppointAndDismiss/AppointAndDismissInfo/AppointAndDismissAdd.do",
+					{ title: "添加任免文件", lock: true, width: 996, height:500 }
+				);				
+			});
+		}
+		
+      //修改
+        function bindUpdateEvent(){
+            $(".updateBtn").click(function(){
+            var id = $(this).parent().attr("TID");
+				art.dialog.open(
+					"${ctx}/AppointAndDismiss/AppointAndDismissInfo/preAppointAndDismissUpdate.do?id="+id,
+                        { title: "修改任免文件", lock: true,width:996,height:500}
+                );
+            });
+        }
+		//删除操作
+		function bindDelEvent() {
+			$(".delBtn").click(function(){
+				var thiz = $(this);
+				var id = thiz.parent().attr("TID");
+				art.dialog.confirm("确定删除？",function(){
+					$.post("${ctx}/AppointAndDismiss/AppointAndDismissInfo/AppointAndDismissDel.do",{id:id},
+						function(result){
+			                if("success" == result) {
+			                	self.location.reload();              
+			                } else {
+			                    art.dialog.tips("删除失败");
+			                }
+			        	}
+			        );
+				});					
+			});
+		}
+		//任免详情
+		function bindDetailEvent() {
+			$(".detailBtn").click(function(){
+				var id = $(this).parent().attr("TID");
+				art.dialog.open(
+					"${ctx}/AppointAndDismiss/AppointAndDismissInfo/aadDetail.do?id="+id,
+					{ title: "任免详情", lock: true, width: 996, height: 600 }
+				);				
+			});
+		}
+		
+		
+		//导出文件
+		function bindExportEvent(){
+			$("#exportBtn").click(function(){
+				art.dialog.open("${ctx}/sys/user/openTitleCheck.do",{ 
+					title: "导出数据", 
+					lock: true, 
+					width: 1000, 
+					height: 450,
+					close:function(){
+						var titleIds = $("#exportUserA").attr("titles");
+						var url = "${ctx }/sys/user/exportUser.do?isNew=false&queryDept=${queryDept}";
+						if(titleIds != '' && titleIds != undefined){
+							$("#exportUserA").attr("href",url+"&titles="+titleIds+"&queryStr="+encodeURI(encodeURI('${queryStr }')));
+							$("#exportUserA").attr("titles","");
+							$("#exportUser").click();
+						}
+					} 
+				});		
+			});
+		}
+		
+		
+	    $(function(){
+	    	bindQueryTextEvent();
+	    	bindDetailEvent();
+	    	bindAddEvent();
+	    	bindDelEvent();
+	       // bindUpdateEvent();
+	        bindSuperSearchEvent();
+	        bindSuperSearchBtn();
+	    	//bindLcInfoEvent();
+   			//bindExportEvent();
+    		//搜索按钮
+   			$(".search_btn").click(function(){
+                $("#searchAadForm").submit();
+   			});
+	    });
+	</script>
+  </body>
+</html>

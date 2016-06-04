@@ -1,0 +1,108 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+  <head>
+    	<%@ include file="/common/common.jsp"%>
+		<%@ taglib uri="/WEB-INF/tlds/cadre-tag.tld" prefix="ide" %>
+		<script  type="text/javascript" src="${res}/js/artDialog/artDialog.js?skin=blue"></script>
+		<title>厦门大学干部信息管理系统</title>
+		<script type="text/javascript" src="${res}/js/DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="${res}/js/tableType.js"></script>
+		<link rel="stylesheet" href="${res }/css/ny.css" type="text/css"  />
+  </head>
+  <body>
+  <div class="tb_700">
+    <form id="Editform" action="" onsubmit="return false">
+    	<input type="hidden" value="${position.id }" name="id">
+    	<table cellpadding="0" cellspacing="0" class="basicInfo" id="font16">
+	    	<tr><td>学院（研究院）/部处</td><td>
+		    	<select name="academy" id="academy" >
+		    		<option value="" selected>请选择</option>
+		    		<c:forEach items="${organizations }" var = "org">
+		    			<c:if test="${org.parentCode == '01' }">
+		    				<option value="${org.code }"  <c:if test="${org.code == position.academy }">selected</c:if>>${org.name }</option>
+		    			</c:if>
+		    		</c:forEach>
+		    	</select></td></tr>
+		    	<tr><td>系所/科室</td><td>
+		    	<select name="department" id="departmentCompany" >
+		    		<c:forEach items="${organizations }" var = "org">
+		    			<c:if test="${org.code == position.department }">
+		    				<option value="${org.code }" selected>${org.name }</option>
+		    			</c:if>
+		    		</c:forEach>
+		    	</select></td></tr>
+		    	<tr><td>岗位名称</td><td>
+		    	<select name="positionName">
+		    		<c:forEach items="${ide:getAllPositionName() }" var="ps">
+		    			<option value="${ps.key }" <c:if test="${ps.key == position.positionName }"> selected</c:if>>${ps.value }</option>
+		    		</c:forEach>
+		    	</select></td></tr>
+		    	<tr><td>岗位类型</td><td>
+		    	<select name="positionType">
+		    		<c:forEach items="${ide:getAllPositionType() }" var="ps">
+		    			<option value="${ps.key }" <c:if test="${ps.key == position.positionType }"> selected</c:if>>${ps.value }</option>
+		    		</c:forEach>
+		    	</select></td></tr>
+		    	<tr><td>岗位级别</td><td>
+		    	<select name="positionLevel">
+		    		<c:forEach items="${ide:getAllPositionLevel() }" var="ps">
+		    			<option value="${ps.key }" <c:if test="${ps.key == position.positionLevel }"> selected</c:if>>${ps.value }</option>
+		    		</c:forEach>
+		    	</select></td></tr>
+		    	<tr><td>发文文号</td><td>
+		    	<input type="text" name="positionPaperNumber" value="${position.positionPaperNumber }" class="txt"/></td></tr>
+		    	<tr><td>发文文名</td><td>
+		    	<input type="text" name="positionPaperName" value="${position.positionPaperName }" class="txt"/></td></tr>
+		    </table>
+    </form>
+    <div class="tb_sub_btns">	
+    	<input type="button" class="editBtn" value="提交"/>
+		<input type="button" value="取消" class="cancel" onclick="art.dialog.close()" />
+    </div>
+    <script type="text/javascript">
+    	function academyChangeEvent(){
+    		$("#academy").change(function(){
+	    		var thiz = $(this);
+	    		var html = "<option value='' selected>请选择</option>";
+	    		if(thiz.val() == ""){
+	    			$("#department").html(html);
+	    			return;
+				}
+	    		$.post("${ctx}/sys/organization/queryChildByCode.do",{code:thiz.val()},function(result){
+			   			var org;
+			   			for(var i=0;i<result.length;i++) {
+			   				org = result[i];
+			   				html +="<option value='"+org.code+"'>"+org.name+"</option>";
+			   			}
+			   			$("#departmentCompany").html(html);
+			   		},"json");
+			 });
+    	}
+    	
+    	function bindEditBtnEvent(){
+    	
+    		$(".editBtn").click(function(){    		
+    			var data = $("#Editform").serialize();
+    			$.post("${ctx}/position/positionEdit.do",data,function(result){
+    				if ("success" == result){
+    					art.dialog.opener.location.reload();
+    					art.dialog.close();
+    				}else if("invalid" == result){
+    					art.dialog.tips("失败,此岗位已被撤岗，不允许修改");
+    				}else{
+    					art.dialog.tips("失败");
+    				}
+    				
+    			});
+    		});
+    	}
+    	$(function(){
+    		academyChangeEvent();
+    		bindEditBtnEvent();
+    	});
+    </script>
+  </body>
+</html>

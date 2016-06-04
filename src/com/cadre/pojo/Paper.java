@@ -1,0 +1,187 @@
+package com.cadre.pojo;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+
+/**
+ * Paper entity. @author MyEclipse Persistence Tools
+ */
+
+public class Paper  implements java.io.Serializable {
+
+
+    // Fields    
+
+     private Integer id;
+     private String paperNumber;
+     private String paperName;
+     private Date paperDay;
+     private String paperType;
+     private String paperUnits;
+     private String paperFile;
+     private Integer delFlag;
+     private Set skills = new HashSet(0);
+     private Set organizationHistories = new HashSet(0);
+     private Set administrationLevelHistories = new HashSet(0);
+     private Set secondments = new HashSet(0);
+     private Set positionHistories = new HashSet(0);
+     private Set administrationWorkHistories = new HashSet(0);
+
+
+    // Constructors
+
+    /** default constructor */
+    public Paper() {
+    }
+
+	/** minimal constructor */
+    public Paper(String paperNumber, String paperName, String paperType) {
+        this.paperNumber = paperNumber;
+        this.paperName = paperName;
+        this.paperType = paperType;
+    }
+    
+    /** full constructor */
+    public Paper(String paperNumber, String paperName, Date paperDay, String paperType,Integer delFlag, String paperUnits, Set skills, Set organizationHistories, Set administrationLevelHistories, Set secondments, Set positionHistories, Set administrationWorkHistories) {
+        this.paperNumber = paperNumber;
+        this.paperName = paperName;
+        this.paperDay = paperDay;
+        this.paperType = paperType;
+        this.paperUnits = paperUnits;
+        this.delFlag=delFlag;
+        
+        this.skills = skills;
+        this.organizationHistories = organizationHistories;
+        this.administrationLevelHistories = administrationLevelHistories;
+        this.secondments = secondments;
+        this.positionHistories = positionHistories;
+        this.administrationWorkHistories = administrationWorkHistories;
+    }
+
+   
+    // Property accessors
+
+    public Integer getId() {
+        return this.id;
+    }
+    
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPaperNumber() {
+        return this.paperNumber;
+    }
+    
+    public void setPaperNumber(String paperNumber) {
+        this.paperNumber = paperNumber;
+    }
+
+    public String getPaperName() {
+        return this.paperName;
+    }
+    
+    public void setPaperName(String paperName) {
+        this.paperName = paperName;
+    }
+
+    public Date getPaperDay() {
+        return this.paperDay;
+    }
+    
+    public void setPaperDay(Date paperDay) {
+        this.paperDay = paperDay;
+    }
+
+    public String getPaperType() {
+        return this.paperType;
+    }
+    
+    public void setPaperType(String paperType) {
+        this.paperType = paperType;
+    }
+
+    public String getPaperUnits() {
+        return this.paperUnits;
+    }
+    
+    public void setPaperUnits(String paperUnits) {
+        this.paperUnits = paperUnits;
+    }
+
+    
+    public String getPaperFile() {
+		return paperFile;
+	}
+
+	public void setPaperFile(String paperFile) {
+		this.paperFile = paperFile;
+	}
+
+	public Set getSkills() {
+        return this.skills;
+    }
+    
+    public void setSkills(Set skills) {
+        this.skills = skills;
+    }
+
+    public Set getOrganizationHistories() {
+        return this.organizationHistories;
+    }
+    
+    public void setOrganizationHistories(Set organizationHistories) {
+        this.organizationHistories = organizationHistories;
+    }
+
+    public Set getAdministrationLevelHistories() {
+        return this.administrationLevelHistories;
+    }
+    
+    public void setAdministrationLevelHistories(Set administrationLevelHistories) {
+        this.administrationLevelHistories = administrationLevelHistories;
+    }
+
+    public Set getSecondments() {
+        return this.secondments;
+    }
+    
+    public void setSecondments(Set secondments) {
+        this.secondments = secondments;
+    }
+
+    public Set getPositionHistories() {
+        return this.positionHistories;
+    }
+    
+    public void setPositionHistories(Set positionHistories) {
+        this.positionHistories = positionHistories;
+    }
+
+    public Set getAdministrationWorkHistories() {
+        return this.administrationWorkHistories;
+    }
+    
+    public void setAdministrationWorkHistories(Set administrationWorkHistories) {
+        this.administrationWorkHistories = administrationWorkHistories;
+    }
+    
+	public Integer getDelFlag() {
+		return this.delFlag;
+	}
+
+	public void setDelFlag(Integer delFlag) {
+		this.delFlag = delFlag;
+	}
+   
+
+
+
+
+
+
+
+
+}

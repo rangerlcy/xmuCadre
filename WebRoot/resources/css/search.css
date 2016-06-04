@@ -1,0 +1,11 @@
+html,body,.search_form{width:600px;font-size:17px;}
+.form_head{height:2px; border-top:2px solid #529e9d; text-align:center; margin-top:53px;}
+.form_head span{padding:3px 20px; position:relative; top:-12px; color:#529e9d; display:inline-block; background-color:#FFFFFF; font-size:14px;}
+.search_form label{width:100px; display:inline-block; text-align:right; height:34px; line-height:34px;:}
+.search_form input{display:inline-block; margin-left:14px; margin-top:18px; border:1px solid #529e9d; height:34px; line-height:34px; font-size:17px; text-align:center;}
+.search_form input.t1{width:104px;}
+.search_form input.t2{width:180px;}
+.search_form input.t3{width:300px;}
+.search_form input.fm{border:0; height:16px; margin-right:8px;}
+.search_form input.sub{margin-left:114px; width:136px; background-color:#529e9d; color:#fff; font-size:17px; cursor:pointer;}
+.search_form input.res{border:0; width:136px; background-color:#fff; cursor:pointer; font-size:15px;}

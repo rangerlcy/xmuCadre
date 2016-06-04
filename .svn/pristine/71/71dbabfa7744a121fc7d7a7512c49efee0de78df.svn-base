@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>厦门大学学工信息管理系统</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css"  />
+	<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
+</head>
+
+<body>
+	<div class="result_head"><span>查询结果</span></div>
+	<table class="search_result">
+		<tr><td>姓名</td><td>性别</td><td>出生年月</td><td>级别</td><td>单位</td><td>职务</td><td>操作</td></tr>
+		<tr><td>张三</td><td>女</td><td>1992.12</td><td>处级</td><td>午托</td><td>干事</td><td><span>详情</span><span>修改</span><span>删除</span></td></tr>
+		<tr><td>张二</td><td>男</td><td>1992.12</td><td>处级</td><td>午托</td><td>干事</td><td><span>详情</span><span>修改</span><span>删除</span></td></tr>
+		<tr><td>德玛西亚</td><td>未知</td><td>1992.12</td><td>处级</td><td>午托</td><td>干事</td><td><span>详情</span><span>修改</span><span>删除</span></td></tr>
+	</table>
+</body>
+</html>

@@ -1,0 +1,18 @@
+package com.cadre.common;
+
+public class ViewLocation {
+	public static final String FOLDER_SYS_USER = "/sys/user";//用户管理
+	public static final String FOLDER_SYS_RESOURCE = "/sys/resource";//资源管理
+	public static final String FOLDER_SYS_ROLE = "/sys/role";//角色管理
+	public static final String FOLDER_SYS_DICTIONARY = "/sys/dictionary";//字典管理
+	public static final String FOLDER_INFOMANAGER_ANNUALASSE ="/infoManager/annualAsse";//年度考核
+	public static final String FOLDER_INFOMANAGER_QUANTITYMANAGER = "/infoManager/quantityManager";//批量操作
+	public static final String FOLDER_INFOMANAGER_USERINFO = "/infoManager/userInfo";//人员信息
+	public static final String FOLDER_APPONITANDDISMISS_INFO = "/AppointAndDismiss/AppointAndDismissInfo";//任免信息
+	public static final String FOLDER_USERTRAIN_INFO = "/userTrain/UserTrainInfo";//培训信息
+	public static final String FOLDER_SYS_ADD = "/sys/appointAndDismiss";//任免信息管理
+	public static final String FOLDER_REPORT="/report";//举报信息
+	public static final String FOLDER_SECONDMENT="/secondment";//举报信息
+	public static final String FOLDER_MSGCOMMON = "/messageCommon";//共有
+	public static final String FOLDER_POSITION = "/position";//岗位信息
+}

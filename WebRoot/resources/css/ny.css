@@ -1,0 +1,91 @@
+body{overflow-x:hidden; margin:0 0;}
+.tb_940{width:940px; margin:0 auto; padding-top:18px;}
+.tb_700{width:700px; margin:0 auto; padding-top:18px;}
+.tb_480{width:480px; margin:0 auto; padding-top:18px;}
+.tb80{width:80%; float:left; margin-bottom:10px;border:1px solid #ccc;}
+.tb80 td{height:40px; line-height:40px; padding-left:20px;}
+.tb15{width:15%; float:left;}
+.tb15 span{width:80px; margin:0 auto; display:block; background-color:#22b2af; color:#fff; border-radius:4px; height:40px; cursor:pointer; text-align:center; line-height:40px; margin-top:40px;}
+/*userAction*/
+.tb_box{width:98%; margin-left:auto; margin-right:auto;}
+.tbexcel{width:100%;}
+.tbexcel tr{width:100%; height:40px;}
+.tbexcel tr th{text-align:left;}
+.tbexcel tr span{color:#c33; font-size:0.8em;}
+.tbexcel tr input{height:25px; line-height:25px; border:1px solid #6cf; border-radius:4px; width:230px;}
+.tbexcel tr input.time{width:100px;}
+.tbexcel tr .readonly{border:1px solid #ccc; color:#888;}
+.tbexcel tr textarea{border:1px solid #6cf; border-radius:8px;}
+.tbexcel tr select{border:1px solid #6cf; border-radius:4px; height:25px;}
+.tb_sub_btns{width:100%; text-align:center;float:left; margin-bottom:10px;}
+.tb_sub_btns input{cursor:pointer; background-color:#6cf; border-radius:4px; border:1px solid #fff; color:#fff; margin-left:20px; word-spacing:4px; width:150px; height:40px; line-height:40px; margin-top:20px; font-size:1.3em;}
+
+/* views/userInfo/openTitleCheck.jsp */
+#allCheck,#backCheck{ background-color:#6cf; color:#fff; border-radius:3px; width:60px; margin:4px 0px; border:0; height:30px; cursor:pointer;}
+#backCheck{margin-left:8px;}
+/* views most */
+.requiredInfo{width:49%; float:left; margin-bottom:8px;}
+.checkInfo{width:90%; margin:0 auto; border-bottom:1px solid #ccc;}
+.reTitle,.exTitle{font-size: 14px; font-family: "Microsoft YaHei",Î¢ÈíÑÅºÚ,"Microsoft JhengHei",»ªÎÄÏ¸ºÚ,STHeiti,MingLiu; border-top-left-radius: 10px; border-top-right-radius: 10px; text-shadow: 1px 1px 0px #ffffff; border: 1px #CCC solid; border-bottom: none; text-align:center; height:38px; line-height:38px;}
+.exTitle span{cursor:pointer; margin-left:4px;}
+.basicInfo,.exInfo{width:100%; border-bottom:1px solid #ccc; border-left:1px solid #ccc; margin-bottom:10px;}
+.basicInfo tr,.exInfo tr{width:100%; height:40px;}
+.basicInfo tr td,.exInfo tr td{border-right:1px solid #ccc; border-top:1px solid #ccc; padding:2px 2px; font-size:13px; text-align:center;}
+.basicInfo tr td input[type=text]{width: 80%; border: 1px solid #ccc; height: 20px; line-height: 20px; padding: 3px; border-radius: 4px;}
+.basicInfo tr td span,.exInfo tr td span{font-size:13px; color:#f00; display:inline-block;}
+.basicInfo tr td select,.exInfo tr td select{border-radius:4px; border:1px solid #ccc; padding:3px;}
+.basicInfo td input[type=button]{height:30px; text-align:center; line-height:30px; background-color:#22b2af; color:#fff; border:0; border-radius:4px;}
+.extenceInfo2{clear:both; width:100%;}
+#font16 tr td:first-child{font-size:16px; font-family: Î¢ÈíÑÅºÚ,"Microsoft Yahei";}
+.basicInfo .editBtn,.basicInfo .delBtn{color:#000;}
+.basicInfo tr td select{border:1px solid #ccc;}
+.basicInfo a{cursor:pointer;}
+.extenceInfo {margin-left:1.9%; width:49%; float:right; margin-bottom:8px;}
+.listInfo{width:100%; border-bottom:1px solid #ccc; border-left:1px solid #ccc;}
+.listInfo tr td{ border-top:1px solid #ccc; border-right:1px solid #ccc; padding:0 2%; height:40px;}
+#remark{width:80%; height:60px; margin:4px 0;}
+input[readOnly]{border:0; background-color:transparent;}
+.photo span{ margin-left:4px; cursor:pointer;}
+/*reportAdd*/
+#selectName{display:inline-block; margin:0 0; padding:0 0;}
+#selectName li{list-style:none; margin:4px;}
+#selectName li a{margin-right:8px;}
+#selectName li button{border:1px solid #ccc; background-color:transparent; cursor:pointer;}
+.reportInfo tr td{text-align:left; padding-left:20px;}
+/*positionAdd*/
+.absoluteParent{ position:absolute;}
+.absoluteChild{ position:absolute; display:none; background-color:#fff; width:230px; text-align:left; list-style:none; border:1px solid #ccc; margin:0; overflow-y:auto; overflow-x:hidden; padding:0; max-height:200px;}
+.absoluteChild li{cursor:pointer; line-height:20px; padding-left:10px;}
+.displayNone{display:none;}
+.absoluteDiv{ position:absolute;}
+.absoluteDiv ul{position:absolute; background-color:#fff; width:230px; text-align:left; list-style:none; border:1px solid #ccc; margin:0; overflow-y:auto; overflow-x:hidden; padding:0; max-height:200px;}
+.absoluteDiv ul li{cursor:pointer; line-height:30px; padding-left:10px;}
+.absoluteDiv ul li:hover{background-color:#ddd;}
+.absoluteDiv ul li a{ text-decoration:none; width:140px; color:#000; display:inline-block;}
+.absoluteDiv ul li input[type=button] {border:1px solid #ccc; background-color:transparent; cursor:pointer;}
+.ml60{ margin-left:60px;}
+/*dictionaryAdd*/
+#creat_value{width:50%; border:1px solid #ddd; border-radius:4px; margin:30px auto; height:28px;}
+/*openTitleCheck*/
+.ul_selblock{ float:left; margin:10px;}
+.ul_selblock2{ border:1px solid #ddd; padding:10px; width:520px; float:left; margin:0;}
+.ul_selblock li{ float:left; display:inline; height:28px; line-height:28px; padding:0 10px 0 25px; background:url(../images/xs_icon4.png) no-repeat 5px 6px; background-position:5px -92px \9; margin-right:15px; margin-bottom:10px; cursor:pointer; width:120px;}
+.ul_selblock li.on{ background:url(../images/xs_icon4.png) no-repeat 5px -44px; background-position:5px -139px \9;}
+/* ·ÖÒ³°´Å¥ */
+.pager{ clear:both; margin-top:5px; height:30px; line-height:30px; font-weight:normal;}
+.pager .l_msg{ float:left;}
+.pager .r_btn{ float:right;}
+.pager .r_btn a,.pager .r_btn span{ float:left;}
+.pager .r_btn a{ height:20px; line-height:20px; padding:0 5px; margin:3px 5px 0 0; text-decoration:none; border-radius:3px; border:1px solid #dddddd; outline:none; background:-webkit-linear-gradient(top,#fdfefc,#f0f0f0); background:-moz-linear-gradient(top,#fdfefc,#f0f0f0); background:-o-linear-gradient(top,#fdfefc,#f0f0f0); background:linear-gradient(top,#fdfefc,#f0f0f0); background:#f0f0f0 \9;}
+.pager .r_btn a:hover{ background:-webkit-linear-gradient(top,#f0f0f0,#fdfefc); background:-moz-linear-gradient(top,#f0f0f0,#fdfefc); background:-o-linear-gradient(top,#f0f0f0,#fdfefc); background:linear-gradient(top,#f0f0f0,#fdfefc);}
+.pager .r_btn span.ms{ margin:0px 5px;}
+.pager .r_btn span.ms input{ width:30px; text-align:center; height:14px; line-height:14px;}
+/*trainUserAdd*/
+#searchUserName{border: 1px solid #ccc;height: 26px;width: 300px;padding-left: 10px;border-radius: 6px;}
+#searchResultOutput{ position:absolute;}
+#searchResultOutput ul{position:absolute; background-color:#fff; width:330px; text-align:left; list-style:none; border:1px solid #ccc; margin:0; overflow-y:auto; overflow-x:hidden; padding:0; max-height:200px;}
+#searchResultOutput ul li{cursor:pointer; line-height:30px; padding-left:10px;}
+#searchResultOutput ul li a {text-decoration:none;width:200px;margin-right:1px;display:inline-block;}
+#searchResultOutput ul li button {border:1px solid #ccc;background-color:transparent;}
+#searchResultOutput ul li:hover{background-color:#ddd;}
+#searchResultOutput ul li span{  width:200px; color:#000; display:inline-block;}

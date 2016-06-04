@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dicts xmlns="http://com.cadre.model.dictionary.xml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://com.cadre.model.dictionary.xml http://com.cadre.model.dictionary.xml ">
+	<dict name="ethnicity" desc="民族管理">
+		<item key="01" value="汉族" />
+		<item key="02" value="蒙古族" />
+		<item key="03" value="回族" />
+		<item key="04" value="藏族" />
+		<item key="05" value="维吾尔族" />
+		<item key="06" value="苗族" />
+		<item key="07" value="彝族" />
+		<item key="08" value="壮族" />
+		<item key="09" value="布依族" />
+		<item key="10" value="朝鲜族" />
+		<item key="11" value="满族" />
+		<item key="12" value="侗族" />
+		<item key="13" value="瑶族" />
+		<item key="14" value="白族" />
+		<item key="15" value="土家族" />
+		<item key="16" value="哈尼族" />
+		<item key="17" value="哈萨克族" />
+		<item key="18" value="傣族" />
+		<item key="19" value="黎族" />
+		<item key="20" value="傈僳族" />
+		<item key="21" value="佤族" />
+		<item key="22" value="畲族" />
+		<item key="23" value="高山族" />
+		<item key="24" value="拉祜族" />
+		<item key="25" value="水族" />
+		<item key="26" value="东乡族" />
+		<item key="27" value="纳西族" />
+		<item key="28" value="景颇族" />
+		<item key="29" value="柯尔克孜族" />
+		<item key="30" value="土族" />
+		<item key="31" value="达斡尔族" />
+		<item key="32" value="仫佬族" />
+		<item key="33" value="羌族" />
+		<item key="34" value="布朗族" />
+		<item key="35" value="撒拉族" />
+		<item key="36" value="毛南族" />
+		<item key="37" value="仡佬族" />
+		<item key="38" value="锡伯族" />
+		<item key="39" value="阿昌族" />
+		<item key="40" value="普米族" />
+		<item key="41" value="塔吉克族" />
+		<item key="42" value="怒族" />
+		<item key="43" value="乌兹别克族" />
+		<item key="44" value="俄罗斯族" />
+		<item key="45" value="鄂温克族" />
+		<item key="46" value="德昂族" />
+		<item key="47" value="保安族" />
+		<item key="48" value="裕固族" />
+		<item key="49" value="京族" />
+		<item key="50" value="塔塔尔族" />
+		<item key="51" value="独龙族" />
+		<item key="52" value="鄂伦春族" />
+		<item key="53" value="赫哲族" />
+		<item key="54" value="门巴族" />
+		<item key="55" value="珞巴族" />
+		<item key="56" value="基诺族" />
+	</dict>
+	<dict name="exportTitle" desc="用户导出标题管理">		
+		<item key="02" value="姓名" />
+		<item key="03" value="性别" />
+		<item key="04" value="证件号码" />
+		<item key="05" value="出生日期" />
+		<item key="06" value="出生地"/>
+		<item key="07" value="籍贯" />
+		<item key="08" value="民族" />
+		<item key="09" value="参加工作时间"/>
+		<item key="10" value="来校工作时间"/>
+		<item key="11" value="退休时间"/>
+		<item key="12" value="研究方向"/>
+		<item key="13" value="党派"/>
+		<item key="14" value="参加党派时间"/>
+		<item key="15" value="健康状况"/>
+		<item key="17" value="身份类型标签"/>
+		<item key="19" value="核对情况"/>
+		<item key="20" value="办公电话"/>
+		<item key="21" value="移动电话"/>
+		<item key="22" value="电子邮箱"/>
+		<item key="25" value="用户名"/>
+		<item key="27" value="员工编号"/>
+		<item key="28" value="级别"/>
+		<item key="29" value="单位"/>
+		<item key="30" value="职务"/>
+	</dict>
+	
+	<dict name="policitalStatus" desc="党派管理">
+		<item key="01" value="中共党员" />
+		<item key="02" value="中共预备党员" />
+		<item key="03" value="共青团员" />
+		<item key="04" value="民革会员" />
+		<item key="05" value="民盟盟员" />
+		<item key="06" value="民建会员" />
+		<item key="07" value="民进会员" />
+		<item key="08" value="农工党党员" />
+		<item key="09" value="致公党党员" />
+		<item key="10" value="九三学社社员" />
+		<item key="11" value="台盟盟员" />
+		<item key="12" value="无党派民主人士" />
+		<item key="13" value="群众" />
+		<item key="14" value="其他" />
+	</dict>
+	<dict name="cardType" desc="证件类型">
+		<item key="11" value="身份证" />
+		<item key="12" value="护照" />
+		<item key="13" value="台胞证" />
+		<item key="14" value="回乡证" />
+	</dict>
+	<dict name="userCheckCase" desc="人员-核对情况">
+		<item key="1" value="已核对无误" />
+		<item key="2" value="核对中" />
+		<item key="3" value="未核对" />
+	</dict>
+	<dict name="healthStatus" desc="健康状况">
+	    <item key="健康" value="健康" />
+	    <item key="一般" value="一般" />
+	    <item key="有病史" value="有病史" />
+	</dict>
+	
+	<dict name="exportReportTitle" desc="举报信息导出标题管理">
+		<item key="02" value="被举报人" />
+		<item key="03" value="举报人" />
+		<item key="04" value="举报时间" />
+		<item key="05" value="举报途径" />
+		<item key="06" value="举报类型" />
+		<item key="07" value="举报内容" />
+		<item key="08" value="处理经过和结论" />
+		<item key="09" value="处理结论类型" />
+		<item key="10" value="备注" />
+	</dict>
+	<dict name="exportSecondmentTitle" desc="挂职信息导出标题管理">
+		<item key="02" value="发文文号" />
+		<item key="03" value="发文题目" />
+		<item key="04" value="发文单位" />
+		<item key="05" value="挂职项目名称" />
+		<item key="06" value="挂职开始时间" />
+		<item key="07" value="挂职结束时间" />
+		<item key="08" value="挂职人员要求" />
+		<item key="09" value="备注" />
+	</dict>
+	<dict name="gender" desc="性别">
+	    <item key="男" value="男" />
+	    <item key="女" value="女" />
+	    <item key="未选择" value="未选择" />
+	</dict>
+	<dict name="asseResult" desc="年度考核-考核结果">
+	    <item key="01" value="优秀"/>
+	    <item key="02" value="良好"/>
+	    <item key="03" value="合格"/>
+	    <item key="04" value="不合格"/>
+	</dict>
+	<dict name="positionName" desc="职位名称">
+	    <item key="处长" value="处长"/>
+	    <item key="副处长" value="副处长"/>
+	    <item key="主任" value="主任"/>
+	    <item key="副主任" value="副主任"/>
+	</dict>
+	<dict name="positionType" desc="职位类型">
+	    <item key="01" value="全职"/>
+	    <item key="02" value="兼职（有编制岗位）"/>
+	    <item key="03" value="兼职（无编制岗位）"/>
+	</dict>	
+	<dict name="positionLevel" desc="职位级别">
+	    <item key="副科级" value="副科级"/>
+	    <item key="正科级" value="正科级"/>
+	    <item key="科级" value="科级"/>
+	    <item key="正科级/副处级" value="正科级/副处级"/>
+	    <item key="副处级" value="副处级" />
+	    <item key="正处级" value="正处级" />
+	    <item key="副厅级" value="副厅级" />
+	    <item key="副部级" value="副部级" />
+	</dict>
+	 <dict name="education" desc="学位管理">
+		<item key="100" value="名誉博士" />
+		<item key="2" value="博士" />
+		<item key="201" value="哲学博士" />
+		<item key="202" value="经济学博士" />
+		<item key="203" value="法学博士" />
+		<item key="204" value="教育学博士" />
+		<item key="205" value="文学博士" /> 
+		<item key="206" value="历史学博士" />
+		<item key="207" value="理学博士" />
+		<item key="208" value="工学博士" />
+		<item key="209" value="农学博士" />
+		<item key="210" value="医学博士" />
+		<item key="211" value="军事学博士" />
+		<item key="212" value="管理学博士" />
+		<item key="219" value="其他学博士" />
+		<item key="280" value="副博士" />
+		<item key="281" value="哲学副博士" />
+		<item key="282" value="经济学副博士" />
+		<item key="283" value="法学副博士" />
+		<item key="284" value="教育学副博士" />
+		<item key="285" value="文学副博士" />
+		<item key="286" value="历史学副博士" />
+		<item key="287" value="理学副博士" />
+		<item key="288" value="工学副博士" />
+		<item key="289" value="农学副博士" />
+		<item key="290" value="医学副博士" />
+		<item key="291" value="军事学副博士" />
+		<item key="299" value="其它副博士" />
+		<item key="3" value="硕士" />
+		<item key="301" value="哲学硕士" />
+		<item key="302" value="经济学硕士" />
+		<item key="303" value="法学硕士" />
+		<item key="304" value="教育学硕士" />
+		<item key="305" value="文学硕士" /> 
+		<item key="306" value="历史学硕士" />
+		<item key="307" value="理学硕士" />
+		<item key="308" value="工学硕士" />
+		<item key="309" value="农学硕士" />
+		<item key="310" value="医学硕士" />
+		<item key="311" value="军事学硕士" />
+		<item key="312" value="管理学硕士" />
+		<item key="313" value="工商管理硕士" />
+		<item key="314" value="法律硕士" />
+		<item key="399" value="其它硕士" />
+		<item key="4" value="学士" />
+		<item key="401" value="哲学学士" />
+		<item key="402" value="经济学学士" />
+		<item key="403" value="法学学士" />
+		<item key="404" value="教育学学士" />
+		<item key="405" value="文学学士" />
+		<item key="406" value="历史学学士" />
+		<item key="407" value="理学学士" />
+		<item key="408" value="工学学士" />
+		<item key="409" value="农学学士" />
+		<item key="410" value="医学学士" />
+		<item key="411" value="军事学学士" />
+		<item key="412" value="药学学士" />
+		<item key="413" value="管理学学士" />
+		<item key="499" value="其它学士" />
+		<item key="5" value="其它" />
+	</dict>
+</dicts>

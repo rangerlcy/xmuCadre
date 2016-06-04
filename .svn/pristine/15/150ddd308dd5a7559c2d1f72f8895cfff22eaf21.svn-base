@@ -1,0 +1,119 @@
+﻿html{width:100%; font-size:1em; min-width:1280px;}
+body{width:100%; margin:0 0; padding-top:0; height:100%; overflow:auto; font-family:"微软雅黑"; overflow-y:hidden;}
+a{text-decoration:none;}
+div,ul{margin:0 0; padding:0 0;}
+.form_head{height:2px; border-top:2px solid #529e9d; text-align:center; margin-top:20px; margin-bottom:20px;}
+/*主页样式 main*/
+.main_head{ height:171px; width:100%;background:url(../images/head.jpg) no-repeat left center transparent;}
+.main_head>img{	width:275px; margin-top:22px; float:left; margin-left:3.88%;}
+.info{width:62.5%; float:right; background-color:#FFFFFF; font-size:18px; height:41px; line-height:41px; border-bottom-left-radius:80px;}
+.user{color:rgb(97, 213, 182); float:left; margin-left:45%;}
+.info span{margin-left:3.5%; float:left; color:#D8CFB3;}
+.info a.logout{margin-left:3.5%; color:rgb(97, 213, 182);}
+.nav{height:39px; float:right; width:100%;}
+.nav img{height:43px; float:left; width:19.3265%;}
+.nav a{margin-left:66px; display:inline-block; width:150px; font-size:1.6em; text-align:center; color:#000; float:left; line-height:36px; background:url(../images/list.png) 0 30px no-repeat;}
+.nav a.no1{background:url(../images/list_check.png) 0 30px no-repeat;}
+.fun_nav,.white,.fun_a,.content{height:450px;}
+.fun_nav{clear:both; width:100%; background-color:rgb(74,151,149);}
+.white{width:2.1962%; float:left; display:inline-block; background-color:#FFFFFF; border-radius:0 0 40px 0;}
+.fun_a{width:17.1303%;float:left; display:inline-block;}
+.fun_a ul{ display:block; height:47px; line-height:47px; font-size:20px; color:#FFFFFF; cursor:pointer; margin-top:3px;}
+.fun_a ul:hover{ background-color:rgb(130,181,182);}
+.fun_a ul span{ margin-left:32px;}
+.fun_list li{ background-color:rgb(130,181,182); margin-left:100%; color:#fff; padding-top:0; position:relative;
+overflow:visible; width:152px; list-style:none; font-size:16px; height:50px; padding:0 0;}
+.fun_list li span{ margin-left:10px;}
+.fun_list li span a{color:#fff;}
+.fun_list li.first{margin-top:-47px;}
+.hide_list li{visibility:hidden;}
+.content{width:80.67%; float:left; display:inline-block; background-color:#fff;}
+.content iframe{width:100%; margin-left:auto; margin-right:auto; display:block; height:100%;}
+.content iframe html{overflow-x:hidden;}
+/*查询样式 search*/
+.search_form{font-size:17px; width:100%;}
+.form_name{padding-top:40px;}
+.form_head span{padding:3px 20px; position:relative; top:-18px; color:#529e9d; display:inline-block; background-color:#FFFFFF; font-size:18px;}
+.search_form label{width:13.3333%; display:inline-block; text-align:right; height:34px; line-height:34px; margin-left:20%;}
+.search_form input{display:inline-block; margin-left:1.87%; margin-top:18px; border:1px solid #529e9d; height:34px; line-height:34px; font-size:17px; text-align:center;}
+.search_form input.t1{width:13.333%;}
+.search_form input.t2{width:24%;}
+.search_form input.t3{width:40%;}
+.search_form input.fm{border:0; height:16px; margin-right:1.07%;}
+.search_form input.sub{margin-left:35.2%; width:18%; background-color:#529e9d; color:#fff; font-size:17px; cursor:pointer; margin-bottom:30px;}
+.search_form input.res{border:0; width:18%; background-color:#fff; cursor:pointer; font-size:15px;}
+/*查询结果样式 search_result */
+.result_head{height:0px; border:1px solid #529e9d; text-align:center; margin-top:30px;}
+.result_head span{padding:3px 20px; position:relative; top:-18px; color:#529e9d; display:inline-block; background-color:#FFFFFF; font-size:18px;}
+.search_result{border-bottom:1px solid #529e9d; border-spacing:0; border-collapse:collapse; width:100%; margin-top:30px; text-align:center;}
+.search_result tr{border-top:1px solid #529e9d; border-left:1px solid #529e9d;}
+.search_result tr:nth-child(odd){background-color:rgba(74,151,149,0.3);}
+.search_result tr td{border-right:1px solid #529e9d; border-spacing:0;}
+.search_result tr td span{margin-left:8px; display:inline-block; color:#fff; background-color:#529e9d; border-radius:4px; width:40px; font-size:13px; height:28px; line-height:28px; cursor:pointer;}
+.exp_xls{margin-top:50px; text-align:center; margin-bottom:30px;}
+.exp_xls span{display:inline-block; width:100px; font-size:19px; background-color:#529e9d; cursor:pointer; color:#fff; height:33px; line-height:33px;}
+/*登陆界面样式 index */
+.login{width:100%; background:url(../images/login_bg.jpg) no-repeat left center transparent;}
+.logo{width:36.6764%; margin-left:auto; margin-right:auto; vertical-align:middle; display:block; padding-top:41px; margin-bottom:20px;}
+.form_bg{ background-image:url(../images/bg2.png); width:100%;}
+#login_form{width:44%; margin:0px auto; display:block; padding-top:28px;}
+#login_form label{width:20%; text-align:right; display:inline-block; color:#fff; font-weight:700; margin-right:10px;}
+.input{border:1px solid rgb(254,240,81); border-radius:4px; background-color:#fff; height:30px; line-height:30px; font-size:24px; margin-top:14px;}
+#login_form span{ margin-left:1.6%; color:rgb(254,240,81); cursor:pointer;}
+#CodeImg { width:18%; vertical-align: bottom; height:34px;}
+#login_form h5{color:rgb(254,240,81); margin:6px 0 0 0; padding:0 0; display:inline-block;}
+#login_form h4{color:rgb(254,240,81); margin:6px 2%; padding:0 0; display:inline-block; cursor:pointer;}
+#login_button{background-color:rgb(254,240,81); color:#fff;}
+.type1{width:60%;}
+.type2{width:30%;}
+.type3{width:30%; background:rgb(81, 254, 90); color:#fff; font-size:24px; border:0; height:35px; line-height:30px; border-radius:4px; margin-bottom:30px; margin-top:12px;}
+.footer{width:100%; background:rgb(254,240,81); text-align:center;}
+.footer h4{font-family:Arial, Helvetica, sans-serif; margin:0 0; padding-top:20px;}
+.footer p{margin-top:8px; padding-bottom:16px;}
+/*系统管理资源管理&系统管理用户管理  sysRoleList&usrList*/
+.r_search{width:100%;}
+#searchUserForm,#queryRoleForm,#queryReportForm,#querySecondmentForm,#searchAadForm{width:100%; text-align:center; margin-bottom:30px;margin-top: 8px;}
+#queryStr{width:200px; height:25px; line-height:25px; color:#000; border:1px solid #22B2AF; border-radius:4px;}
+#queryStrTemp{width:200px; height:25px; line-height:25px; color:#ccc; border:1px solid #22B2AF; border-radius:4px;}
+.btn{cursor:pointer; background-color:#22B2AF; border-radius:4px; border:1px solid #fff; color:#fff; height:25px; margin-left:8px; word-spacing:4px;}
+.tblist{border-spacing:0; border-collapse:collapse; width:100%; margin-top:30px; text-align:center; margin-bottom:30px;}
+.tblist tr th,.tblist tr td{ border-spacing:0; font-size:14px;}
+.tblist tr td input{margin-left:0; background-color:transparent; font-size:13px; border:0; color:#67886A; padding:1px 2px;}
+.pager{width:100%; margin-bottom:18px; line-height: 24px;}
+.l_msg{float:left; color:#111; font-size:.8em; display:inline-block;}
+.r_btn{float:right; font-size:1em; display:inline-block;}
+.r_btn input{border:1px solid #22B2AF; width:50px; border-radius:4px; text-align:center}
+.r_btn a{margin-left:8px; color:#76ACAE;}
+.AdvantageSearch input{ border:1px solid #22B2AF; border-radius:4px; width:13%; height:21px; line-height:21px; margin-bottom:4px;}
+.AdvantageSearch input.Wdate{width:8%;}
+.AdvantageSearch select{ border:1px solid #22B2AF; border-radius:4px; height:21px; line-height:21px;}
+#SuperSearchBtn{background-color:#22B2AF; color:#fff; width:9%; height:30px; line-height:30px; font-size:15px; cursor:pointer;}
+
+.displayNone{display:none}
+/*batchActionList*/
+.r_help_box{ clear:both; border:1px solid #d6d4bb; background:#faf8e1; padding:10px 23px; font-size:16px; color:#948975; line-height:1.7em;}
+.r_help_box2{ margin-bottom:15px;}
+.r_help_box2 strong{ color:green;}
+.search_btn2{ float:left;margin-left:10px; padding:0 12px; height:28px; color:#fff; border:1px solid #d42420; background:-webkit-linear-gradient(top,#f77370,#f34743); background:-moz-linear-gradient(top,#f77370,#f34743); background:-o-linear-gradient(top,#f77370,#f34743); background:linear-gradient(top,#f77370,#f34743);background-color:rgb(243,76,76); padding:0 5px \9; background:#f34541 \9;}
+.search_btn2:hover{ background:-webkit-linear-gradient(top,#f34743,#f77370); background:-moz-linear-gradient(top,#f34743,#f77370); background:-o-linear-gradient(top,#f34743,#f77370); background:linear-gradient(top,#f34743,#f77370);}
+.ts{ color:#f34541; padding-left:7px;}
+.ts2{ float:left; height:28px; line-height:28px;}
+.upload_file_excel{ float:left; border-radius:3px; border:1px solid #dddddd; font:14px Microsoft Yahei; margin-right:5px \9;}
+#uploadAddForm,#uploadDelForm{height:40px;}
+/*annualAsseList*/
+#searchUserForm select{height: 29px; border: 1px solid #Ccc; border-radius: 4px; padding: 0 4px;}
+/*dictionaryList*/
+.parentDic{width:33.3%; float:left; display:inline-block; height:40px; line-height:40px;}
+.parentDic:nth-child(6n+1),.parentDic:nth-child(6n+2),.parentDic:nth-child(6n+3){background-color:#ddd;}
+.dic_container{width:90%; margin-right:0 auto;}
+.output{float:left; width:45%;}
+.save{float:right; margin-right:25%; line-height:40px; color:#a6a681; font-size:24px; cursor:pointer;text-shadow: 0 0 6px #bbb;}
+.topElement{margin-left:10px; cursor:pointer; float:left;}
+.update{float:right;margin-right:5px; margin-top:10px;}
+.delete{float:right;margin-right:5px; margin-top:10px;}
+.edit{border:2px solid; height:50px; width:50%;overflow:auto;display:none;}
+.childLabel{margin-left:20px;}
+#creat_value{margin-left:20px;}
+.outputFather{position:absolute; width:100%;}
+.outputList{position:absolute; width:33%; margin-top:40px; background-color:#fff; border:1px solid #ccc;}
+#update_value{margin-left: 20px;border: 1px solid #ccc;height: 24px;border-radius: 6px;padding-left: 10px;width: 150px;}

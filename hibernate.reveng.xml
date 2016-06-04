@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table name="role_resources" catalog="xmucadre"
+		class="com.cadre.pojo.RoleResource">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	<table name="sys_resources" catalog="xmucadre"
+		class="com.cadre.pojo.SysResource">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	<table name="sys_role" catalog="xmucadre"
+		class="com.cadre.pojo.SysRole">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	<table name="user" catalog="xmucadre"
+		class="com.cadre.pojo.User">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	<table name="user_role" catalog="xmucadre"
+		class="com.cadre.pojo.UserRole">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	<table name="place" catalog="xmucadre"
+		class="com.cadre.pojo.Place">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+	<table name="organization" catalog="xmucadre"
+		class="com.cadre.pojo.Organization">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+</hibernate-reverse-engineering>

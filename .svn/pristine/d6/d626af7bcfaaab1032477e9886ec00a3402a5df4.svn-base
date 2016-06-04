@@ -1,0 +1,78 @@
+package com.cadre.service.skill;
+
+import java.sql.Date;
+
+import java.util.List;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cadre.dao.BaseDao;
+import com.cadre.pojo.Skill;
+
+@Service
+public class SkillService {
+
+	@Autowired
+	BaseDao<Skill> skillDao;
+	
+	private Logger logger = LogManager.getLogger(SkillService.class);
+	
+	public void add(Skill skill) {
+		if (null == skill) {
+			logger.debug("null skill");
+			return;
+		}
+		try {
+			skillDao.save(skill);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return;
+			// TODO: handle exception
+		}
+		
+	}
+	
+	public void delete(Skill skill) {
+		if (null == skill || null == skill.getId()) {
+			logger.debug("null skill");
+			return;
+		}
+		try {
+			skillDao.delete(skill);
+		} catch (Exception e) {
+			// TODO: handle exception
+			logger.error(e.getMessage());
+			return;
+		}
+		
+	}
+	
+	public void update(Skill skill) {
+		if (null == skill || null == skill.getId()) {
+			logger.debug("null skill");
+			return;
+		}
+		try {
+			skillDao.update(skill);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return;
+			// TODO: handle exception
+		}
+	}
+	
+	public Skill queryById(Integer id){
+		return skillDao.findOne(Skill.class, id);
+	}
+	
+	public Skill searchWhenPost(Integer userId,Date trainBeginDay){
+		String hql = " from Skill where user.id = ? and beginDay <= ? and endDay >= ?";
+		List<Skill> skills = skillDao.queryList(hql, new Object[]{userId, trainBeginDay, trainBeginDay});
+		if (skills.size() == 0) return null;
+		else return skills.get(0);
+		
+	}
+}

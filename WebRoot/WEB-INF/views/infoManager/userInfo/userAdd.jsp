@@ -1,0 +1,291 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<%@ include file="/common/common.jsp"%>
+<%@ taglib uri="/WEB-INF/tlds/cadre-tag.tld" prefix="ide"%>
+<script type="text/javascript"
+	src="${res}/js/artDialog/artDialog.js?skin=blue"></script>
+<title>厦门大学干部信息管理系统</title>
+<link rel="stylesheet" href="${res }/css/style.css" type="text/css" />
+<link rel="stylesheet" href="${res }/css/content.css" type="text/css" />
+<link rel="stylesheet" href="${res }/css/ny.css" type="text/css" />
+<script type="text/javascript" src="${res}/js/DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${res}/js/checkForm.js"></script>
+<script type="text/javascript" src="${res}/js/photo.js"></script>
+</head>
+<body>
+	<div class="tb_box">
+		<form id="addForm" method="post"
+			action="${ctx}/infoManager/userInfo/userAdd.do"
+			enctype="multipart/form-data">
+			<div class="requiredInfo">
+				<div class="reTitle">
+					<strong>基本信息(<font color="red">必填</font>)
+					</strong>
+				</div>
+				<table class="basicInfo" cellspacing="0">
+					<tr>
+						<td>姓名</td>
+						<td><input id="name" name="name" type="text"
+							class="txt required" datatype="name" /></td>
+					</tr>
+					<tr>
+						<td>身份类型标签</td>
+						<td><select id="identityTypeLabel" name="identityTypeLabel">
+						<option value = "" selected>请选择</option>
+								<c:forEach items="${ide:getAllIdentityTypeLabel()}" var="kv">
+									<option value="${kv.key }">${kv.value }</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+					<tr>
+						<td>证件号</td>
+						<td><input id="identifyNum" name="identifyNum" type="text"
+							class="txt required" datatype="personalID" /></td>
+					</tr>
+					<tr>
+						<td>性别</td>
+						<td><select id="gender" name="gender">
+								<option value="男">男</option>
+								<option value="女">女</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>民族</td>
+						<td><select id="nation" name="nation">
+								<option value="">请选择</option>
+								<c:forEach items="${ide:getAllEthnicity()}" var="kv">
+									<option value="${kv.key }">${kv.value }</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+					<tr>
+						<td>出生地</td>
+						<td><select style="width:100px;" class="check checkLevel1"
+							name="birthPlaceProv" id="birthPlaceProv"
+							onchange="provChangeEvent(this,'birthPlace')">
+								<option value=''>请选择</option>
+								<c:forEach items="${provList}" var="pl">
+									<option value="${pl.code }">${pl.simple }</option>
+								</c:forEach>
+						</select> <select style="width:100px;" id="birthPlaceCity"
+							class="check checkLevel1" name="birthPlaceCity"
+							id="birthPlaceCity" onchange="cityChangeEvent(this,'birthPlace')">
+								<option value=''>请选择</option>
+						</select> <select class="check checkLevel1 required" style="width:100px;"
+							id="birthPlaceDist" name="birthPlaceDist">
+								<option value=''>请选择</option>
+						</select> <span class="ts"></span></td>
+					</tr>
+					<tr>
+						<td>籍贯</td>
+						<td><select style="width:100px;" class="check checkLevel1"
+							name="originPlaceProv" id="originPlaceProv"
+							onchange="provChangeEvent(this,'originPlace')">
+								<option value=''>请选择</option>
+								<c:forEach items="${provList}" var="pl">
+									<option value="${pl.code }">${pl.simple }</option>
+								</c:forEach>
+						</select> <select style="width:100px;" class="check checkLevel1"
+							id="originPlaceCity" name="originPlaceCity"
+							onchange="cityChangeEvent(this,'originPlace')">
+								<option value=''>请选择</option>
+						</select> <select class="check checkLevel1 required" style="width:100px;"
+							id="originPlaceDist" name="originPlaceDist">
+								<option value=''>请选择</option>
+						</select> <span class="ts"></span></td>
+					</tr>
+					<tr>
+						<td>出生日期</td>
+						<td><input id="birthday" name="birthDay" type="text"
+							class="txt time Wdate required"
+							value="<fmt:formatDate value='${sysUser.birthday }'  pattern='yyyy-MM-dd'/>"
+							onfocus="WdatePicker({readOnly:false})" /></td>
+					</tr>
+					<tr>
+						<td>核对情况</td>
+						<td><select id="checkCase" name="checkCase">
+								<option value="" selected>请选择</option>
+								<option value="已核对无误">已核对无误</option>
+								<option value="核对中">核对中</option>
+								<option value="未核对">未核对</option>
+						</select></td>
+					</tr>
+				</table>
+			</div>
+			<div class="extenceInfo">
+				<div class="exTitle">
+					<strong>扩展信息(选填)</strong>
+				</div>
+				<table class="exInfo" cellspacing="0">
+					<tr>
+						<td>参加工作时间</td>
+						<td><input id="workBeginDay" name="beginWorkDay" type="text"
+							class="txt time Wdate"
+							value="<fmt:formatDate value='${sysUser.birthday }'  pattern='yyyy-MM-dd'/>"
+							onfocus="WdatePicker({readOnly:false})" /></td>
+					</tr>
+					<tr>
+						<td>来校工作时间</td>
+						<td><input id="beginSchoolWorkDay" name="beginSchoolWorkDay"
+							type="text" class="txt time Wdate"
+							value="<fmt:formatDate value='${sysUser.birthday }'  pattern='yyyy-MM-dd'/>"
+							onfocus="WdatePicker({readOnly:false})" /></td>
+					</tr>
+					<tr>
+						<td>退休时间</td>
+						<td><input id="retireDay" name="retireDay" type="text"
+							class="txt time Wdate"
+							value="<fmt:formatDate value='${sysUser.birthday }'  pattern='yyyy-MM-dd'/>"
+							onfocus="WdatePicker({readOnly:false})" /></td>
+					</tr>
+					<tr>
+						<td>研究方向</td>
+						<td><input id="researchDirection" name="researchDirection"
+							type="text" class="txt" maxlength=80 /></td>
+					</tr>
+					<tr>
+						<td>人员级别</td>
+						<td><select id="level" name="level">
+								<option value="">请选择</option>
+								<c:forEach items="${ide:getAllPositionLevel()}" var="kv">
+									<option value="${kv.key }">${kv.value }</option>
+								</c:forEach>
+						</select></td></tr>
+					<tr>
+						<td>党派</td>
+						<td><select id="party" name="party">
+								<option value="">请选择</option>
+								<c:forEach items="${ide:getAllPolicitalStatus()}" var="kv">
+									<option value="${kv.key }">${kv.value }</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+					<tr>
+						<td>参加党派时间</td>
+						<td><input id="joinPartyDay" name="joinPartyDay" type="text"
+							class="txt time Wdate"
+							value="<fmt:formatDate value='${sysUser.birthday }'  pattern='yyyy-MM-dd'/>"
+							onfocus="WdatePicker({readOnly:false})" /></td>
+					</tr>
+					<tr>
+						<td>照片</td>
+						<td>
+							<div class="photo">
+								<input type="file" name="photo" /> <span
+									onclick="deletePhoto(this);">移除</span> <span
+									onclick="addPhoto(this);">添加</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>健康状况</td>
+						<td><select id="healthStatus" name="healthStatus">
+								<option value="" selected>请选择</option>
+								<option value="健康">健康</option>
+								<option value="一般">一般</option>
+								<option value="有病史">有病史</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>办公电话</td>
+						<td><input id="ContectWorkPhone" name="ContectWorkPhone"
+							type="text" class="txt" datatype="phone" /></td>
+					</tr>
+					<tr>
+						<td>移动电话</td>
+						<td><input id="contectMobilePhone" name="contectMobilePhone"
+							type="text" class="txt" datatype="mobile" /></td>
+					</tr>
+					<tr>
+						<td>电子邮箱</td>
+						<td><input id="contectEmail" name="contectEmail" type="text"
+							class="txt" datatype="email" /></td>
+					</tr>
+					<tr>
+						<td>备注</td>
+						<td><textarea name="remark" id="remark" maxlength=200></textarea></td>
+					</tr>
+				</table>
+			</div>
+			<div class="tb_sub_btns">
+				<input type="submit" value="确定" class="add" id="saveBtn"
+					datatype="submit" /> <input type="button" value="取消" class="cancel"
+					onClick="art.dialog.close()" />
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			$("#identityTypeLabel").change(function() {
+				if ($("#identityTypeLabel").val() == 11) {
+					$("#identifyNum").attr("datatype", "personalID");
+					$("#identifyNum").unbind();
+					$("#identifyNum").bind("blur", bindPersonalId());
+					$("#identifyNum").bind("focus", bindClearMessage());
+					$("#identifyNum").focus();
+				} else {
+					$("#identifyNum").attr("datatype", "digitalWord");
+					$("#identifyNum").unbind();
+					$("#identifyNum").bind("blur", bindDigitalWord());
+					$("#identifyNum").bind("focus", bindClearMessage());
+					$("#identifyNum").focus();
+				}
+			});
+		});
+		function provChangeEvent(elem, obj) {
+			var thiz = $(elem);
+			$("#" + obj + "City").html("<option value=''>请选择</option>");
+			$("#" + obj + "Dist").html("<option value=''>请选择</option>");
+			var html = "<option value=''>请选择</option>";
+			if (thiz.val() == '') {
+				$("#" + obj + "City").html(html);
+				return;
+			}
+			//根据省份查城市
+			$.post("${ctx}/sys/place/queryChildByCode.do", {
+				code : thiz.val()
+			}, function(result) {
+				var city;
+				for (var i = 0; i < result.length; i++) {
+					city = result[i];
+					html += "<option value='"+city.code+"'>" + city.simple
+							+ "</option>";
+				}
+				$("#" + obj + "City").html(html);
+			}, "json");
+		}
+		function cityChangeEvent(elem, obj) {
+			var thiz = $(elem);
+			$("#" + obj + "Dist").html("<option value=''>请选择</option>");
+			var html = "<option value=''>请选择</option>";
+			if (thiz.val() == '') {
+				$("#" + obj + "Dist").html(html);
+				return;
+			}
+			//根据省份查城市
+			$.post("${ctx}/sys/place/queryChildByCode.do", {
+				code : thiz.val()
+			}, function(result) {
+				var dist;
+				for (var i = 0; i < result.length; i++) {
+					dist = result[i];
+					html += "<option value='"+dist.code+"'>" + dist.simple
+							+ "</option>";
+				}
+				$("#" + obj + "Dist").html(html);
+			}, "json");
+		}
+		function loadPhoto(obj) {
+			var fileName = $(obj).val();
+			if (fileName != null && fileName != '' && !isImgFile(fileName)) {
+				art.dialog.alert("请上传正确的照片格式[jpg、bmp、png、tiff]");
+				$(obj).val("");
+			}
+		}
+	</script>
+</body>
+</html>

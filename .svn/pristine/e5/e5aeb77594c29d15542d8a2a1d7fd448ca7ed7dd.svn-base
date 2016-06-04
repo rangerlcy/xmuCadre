@@ -1,0 +1,57 @@
+package com.cadre.service.sys;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cadre.dao.BaseDao;
+import com.cadre.pojo.Place;
+
+@Service
+public class PlaceService {
+	
+	@Autowired
+	BaseDao<Place> placeDao;
+	
+	/**
+	 * 查出所有数据
+	 * @return
+	 */
+	public List<Place> queryAll() {
+		String hql = " from Place ";
+		return placeDao.queryList(hql, null);
+	}
+	/**
+	 * 查出所有省份
+	 * @return
+	 */
+	public List<Place> queryAllProv() {
+		String hql = " from Place where parentCode='AB' ";
+		return placeDao.queryList(hql, null);
+	}
+	/**
+	 * 根据编码查出下一级地区
+	 * @return
+	 */
+	public List<Place> queryChildByCode(String code) {
+		String hql = " from Place where parentCode=? ";
+		return placeDao.queryList(hql, new Object[]{code});
+	}
+	
+	/**
+	 * 根据编码查名称
+	 * @return
+	 */
+	public String queryNameByCode(String code) {
+		String hql = " from Place where code=? ";
+		List<Place> places = placeDao.queryList(hql, new Object[]{code});
+		if(places.size() == 0){
+			return "";
+		}else{
+			Place place = places.get(0);
+			return place.getSimple();
+		}
+	}
+	
+}

@@ -1,0 +1,28 @@
+package com.cadre.service.position;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cadre.dao.BaseDao;
+import com.cadre.pojo.Paper;
+import com.cadre.pojo.Secondment;
+
+@Service
+public class PaperService {
+	
+	@Autowired
+	BaseDao<Paper> paperDao;
+	
+	public void addPaper(Paper paper){
+		if (null == paper) return;
+		paperDao.save(paper);
+	}
+	/**
+	 * 根据id查找
+	 * @param id
+	 * @return
+	 */
+	public Paper findById(Integer id){
+		return 	paperDao.findOne(Paper.class,id);
+	}
+}

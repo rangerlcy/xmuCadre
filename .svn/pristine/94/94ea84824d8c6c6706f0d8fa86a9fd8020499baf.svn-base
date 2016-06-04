@@ -1,0 +1,209 @@
+package com.cadre.service.infoManager;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cadre.controller.pojo.UserShowView;
+import com.cadre.model.utils.DateUtil;
+import com.cadre.model.utils.StringUtil;
+import com.cadre.model.view.ViewFunction;
+import com.cadre.pojo.Country;
+import com.cadre.pojo.Organization;
+import com.cadre.pojo.Place;
+import com.cadre.pojo.Report;
+import com.cadre.pojo.Secondment;
+import com.cadre.pojo.User;
+import com.cadre.service.report.ReportService;
+import com.cadre.service.sys.OrganizationService;
+import com.cadre.service.sys.PlaceService;
+import com.cadre.service.sys.CountryService;
+import com.cadre.service.sys.UserService;
+
+@Service
+public class TableMappingService {
+	
+	@Autowired
+	OrganizationService organizationService;
+	@Autowired
+	CountryService countryService;
+	@Autowired
+	PlaceService placeService;
+
+	
+	
+	/**
+	 * 获取user表行中的数据
+	 * @param user
+	 * @param key
+	 * @return
+	 */
+	
+	
+	public String getUserColVal(UserShowView userShowView,String key,Map<String, String> placeMap,Map<String, String> countryMap){
+		User user = userShowView.getUser();
+		String value="";		
+		if ("02".equals(key)){
+			value = user.getName();
+		}
+		if ("03".equals(key)){
+			value= user.getGender();
+		}
+		if ("04".equals(key)){
+			value = user.getIdentifyNum();
+		}
+		if ("05".equals(key)){
+			value = DateUtil.formatStr(user.getBirthDay());
+		}
+		if ("06".equals(key)){
+			value =  user.getBirthPlace();
+		}
+		if ("07".equals(key)){
+			//籍贯
+			String origionPlace = user.getOriginPlace();
+			if (StringUtil.isNotBlank(origionPlace)){
+				value = placeMap.get(origionPlace);
+			}
+		}
+		if ("08".equals(key)){
+			String nation = user.getNation();
+			if (StringUtil.isNotBlank(nation)){
+				value = countryMap.get(nation);
+			}
+		}
+		if ("09".equals(key)){
+			value=DateUtil.formatStr(user.getBeginWorkDay());
+		}
+		if ("10".equals(key)){
+			value = DateUtil.formatStr(user.getBeginSchoolWorkDay());
+		}
+		if ("11".equals(key)){
+			value = DateUtil.formatStr(user.getRetireDay());
+		}
+		if ("12".equals(key)){
+			value = user.getResearchDirection();
+		}
+		if ("13".equals(key)){
+			
+			value = ViewFunction.getPolicitalStatusName(user.getParty());
+		}
+		if ("14".equals(key)){
+			value = DateUtil.formatStr(user.getJoinPartyDay());
+		}
+		if ("15".equals(key)){
+			value = user.getHealthStatus();
+		}
+		if ("16".equals(key)){
+			value = user.getPhotoUrl();
+		}
+		if ("17".equals(key)){
+			value = ViewFunction.getCardType(user.getIdentityTypeLabel());
+		}
+		if ("18".equals(key)){
+			value = user.getRemark();
+		}
+		if ("19".equals(key)){
+			value = ViewFunction.getUserCheckCase(user.getCheckCase());
+		}
+		if ("20".equals(key)){
+			value = user.getContectWorkPhone();
+		}
+		if ("21".equals(key)){
+			value = user.getContectMobilePhone();
+		}
+		if ("22".equals(key)){
+			value = user.getContectEmail();
+		}
+		if ("24".equals(key)){
+			
+		}
+		if ("25".equals(key)){
+			value = user.getUserName();
+		}
+		if ("26".equals(key)){
+			
+		}
+		if ("27".equals(key)){
+			value = user.getNumber();
+		}
+		if ("28".equals(key)){
+			value = userShowView.getAdministrationLevel();
+		}
+		if ("29".equals(key)){
+			value = userShowView.getAdministrationWorkUnits();
+		}
+		if ("30".equals(key)){
+			value = userShowView.getAdministrationWorkName();
+		}
+		
+		return value;
+	}
+
+	public String getReportColVal(Report report, String key) {
+		String value="";		
+		if ("02".equals(key)){
+			value = report.getUser().getName();
+		}
+		if ("03".equals(key)){
+			value= report.getInformer();
+		}
+		if ("04".equals(key)){
+			value =  DateUtil.formatStr(report.getReportedDay());
+		}
+		if ("05".equals(key)){
+			value = report.getReportedWay();
+		}
+		if ("06".equals(key)){
+			value =  report.getReportedType();
+		}
+		if ("07".equals(key)){
+				value = report.getReportedContent();
+			}
+		if ("08".equals(key)){
+				value = report.getProcessingAndConclusion();
+			}
+		
+		if ("09".equals(key)){
+			value=report.getProcessingAndConclusionType();
+		}
+		if ("10".equals(key)){
+			value = report.getRemark();
+		}
+		return value;
+	}
+	public String getSecondmentColVal(Secondment secondment, String key) {
+		String value="";		
+		if ("02".equals(key)){
+			value = secondment.getPaper().getPaperNumber();
+		}
+		if ("03".equals(key)){
+			value= secondment.getPaper().getPaperName();
+		}
+		if ("04".equals(key)){
+			value =  secondment.getPaper().getPaperUnits();
+		}
+		if ("05".equals(key)){
+			value = secondment.getTemporaryProjectName();
+		}
+		if ("06".equals(key)){
+			value =  DateUtil.formatStr(secondment.getTemporaryBeginDay());
+		}
+		if ("07".equals(key)){
+				value = DateUtil.formatStr(secondment.getTemporaryEndDate());
+			}
+		if ("08".equals(key)){
+				value = secondment.getTemporaryRequirement();
+			}
+		
+		if ("09".equals(key)){
+			value=secondment.getRemark();
+		}
+	
+		return value;
+	}
+}

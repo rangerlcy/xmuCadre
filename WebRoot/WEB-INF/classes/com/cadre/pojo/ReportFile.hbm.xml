@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.cadre.pojo.ReportFile" table="report_file" catalog="xmucadre">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="reportId" type="java.lang.Integer">
+            <column name="reportId" not-null="true">
+                <comment>对应report表中的id</comment>
+            </column>
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="name" length="200">
+                <comment>附件名称</comment>
+            </column>
+        </property>
+        <property name="url" type="java.lang.String">
+            <column name="url" length="200">
+                <comment>附件url</comment>
+            </column>
+        </property>
+        <property name="delFlag" type="java.lang.Integer">
+            <column name="delFlag">
+                <comment>删除标志位</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

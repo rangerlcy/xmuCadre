@@ -1,0 +1,142 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<%@ include file="/common/common.jsp"%>
+		<title>厦门大学干部信息管理系统</title>
+		<link type="text/css" rel="stylesheet" href="${ctx}/resources/css/ny.css" />
+		<script  type="text/javascript" src="${ctx}/resources/js/artDialog/artDialog.js?skin=blue"></script>
+		<script type="text/javascript" src="${res}/js/DatePicker/WdatePicker.js"></script>
+	</head>
+	<body>
+	    <div class="tb_700">
+	        <input id="number" value="${report.user.number }" hidden="hidden" />
+			<table cellpadding="0" cellspacing="0" border="0" class="basicInfo reportInfo">
+			   
+				<tr>
+					<td >被举报人：</td>
+					<td><input id="user" name="user" type="text" 
+						class="txt" style="width:200px;" value="${report.user.name }"  readonly="readonly"/> 
+					</td>
+				</tr>
+				<tr>
+					<td >举报人：</td>
+					<td><input id="informer" name="informer" type="text"
+						class="txt" readonly="readonly" style="width:200px;"  value="${report.informer }"/>
+					</td>
+				</tr>
+				<tr>
+					<td ><span style="color:red">*</span>举报时间：</td>
+					<td><input id="reportedDay" name="reportedDay" type="text"
+						class="txt Wdate" style="width:200px;"  value="<fmt:formatDate value='${report.reportedDay }'  pattern='yyyy-MM-dd'/>"  onfocus="WdatePicker({readOnly:false})"/> 
+					</td>
+				</tr>
+				<tr>
+					
+					<td><span style="color:red">*</span>举报途径 </td>
+					<td>
+					<select id="reportedWay" name="reportedWay">
+					        <option value="" selected >请选择</option>
+					        <c:forEach items="${ide:getAllItems('reportedWay') }" var="rw">
+					        	<option value="${rw.value }" <c:if test="${report.reportedWay eq rw.value }">selected</c:if>>${rw.value }</option>
+					        </c:forEach>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td><span style="color:red">*</span>举报类型</td>
+					<td><select id="reportedType" name="reportedType">
+					        <option value="" selected>请选择</option>
+							<c:forEach items="${ide:getAllItems('reportedType') }" var="rt">
+					        	<option value="${rt.value }" <c:if test="${report.reportedType eq rt.value }">selected</c:if>>${rt.value }</option>
+					        </c:forEach>	
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td ><span style="color:red">*</span>举报内容：</td>
+					<td><input id="reportedContent" name="reportedContent" type="text"
+						class="txt" style="width:200px;"  value="${report.reportedContent }"  maxlength=50/>
+					</td>
+				</tr>
+				<tr>
+					<td >处理经过和结论：</td>
+					<td><input id="processingAndConclusion" name="processingAndConclusion" type="text" 
+						class="txt" style="width:200px;" value="${report.processingAndConclusion }"  maxlength=50/> 
+					</td>
+				</tr>
+				<tr>
+					<td >处理结论类型</td>
+					<td>
+					<select id="processingAndConclusionType" name="processingAndConclusionType">
+						 <option value="" selected>请选择</option>
+							<c:forEach items="${ide:getAllItems('processingAndConclusionType') }" var="pt">
+					        	<option value="${pt.value }" <c:if test="${report.processingAndConclusionType eq pt.value }">selected</c:if>>${pt.value }</option>
+					       </c:forEach>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td >备注：</td>
+					<td><textarea id="remark" style="width:300px;height:80px;" name="remark" class="txt"  cols="40" rows="3" value="${report.processingAndConclusion }"  maxlength=2000>${report.remark }</textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="tb_sub_btns">
+			<input type="button" value="确定" class="add" id="saveBtn" />
+			<input type="button" value="取消" class="cancel" onclick="art.dialog.close()" />
+		</div>
+	    <script type="text/javascript">
+	        $(function(){
+	        	$("#name").focus();
+	        	bindSaveEvent();//绑定提交表单事件
+	        });
+	        
+	       function bindSaveEvent(){
+				$("#saveBtn").click(function(){
+					var canSubmit = true;
+	                 if($.trim($("#reportedDay").val())==""){
+	                    art.dialog.alert("请输入举报时间");
+	                    return;
+	                }
+	                 if($.trim($("#reportedWay").val())==""){
+	                    art.dialog.alert("请输入举报途径");
+	                    return;
+	                }
+	                 if($.trim($("#reportedType").val())==""){
+	                    art.dialog.alert("请输入举报类型");
+	                    return;
+	                }
+	                   if($.trim($("#reportedContent").val())==""){
+	                    art.dialog.alert("请输入举报内容");
+	                    return;
+	                }
+					if(canSubmit){
+		                $.post("${ctx}/report/updateReports.do",
+		                {		
+		                		id:"${report.id}",
+								reportedDay:$.trim($("#reportedDay").val()),
+								reportedWay:$.trim($("#reportedWay").val()),	
+								reportedType:$.trim($("#reportedType").val()),	
+								reportedContent:$.trim($("#reportedContent").val()),	
+								processingAndConclusion:$.trim($("#processingAndConclusion").val()),	
+								processingAndConclusionType:$.trim($("#processingAndConclusionType").val()),	
+								remark:$.trim($("#remark").val())
+								},
+		                function(result){
+				                if("success" == result) {
+				    				art.dialog.opener.location.reload();
+				                	art.dialog.close();               
+				                } else {
+				                    art.dialog.tips("修改失败!");
+				                }
+	                });
+	                }		
+				});
+			}
+			
+	    </script>
+	</body>
+</html>

@@ -1,0 +1,54 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+  <head>
+    	<%@ include file="/common/common.jsp"%>
+		<%@ taglib uri="/WEB-INF/tlds/cadre-tag.tld" prefix="ide" %>
+		<script  type="text/javascript" src="${res}/js/artDialog/artDialog.js?skin=blue"></script>
+		<title>厦门大学干部信息管理系统</title>
+		<link rel="stylesheet" href="${res }/css/style.css" type="text/css"  />
+		<link rel="stylesheet" href="${res }/css/content.css" type="text/css"  />
+		<link rel="stylesheet" href="${res }/css/ny.css" type="text/css"  />
+		<script type="text/javascript" src="${res}/js/DatePicker/WdatePicker.js"></script>
+  </head>
+<body>
+		<div class="tb_box">
+			<div class="requiredInfo">
+				<div class="reTitle"><strong>文件信息</strong></div>
+				<table class="basicInfo" cellspacing="0">
+					<tr><td>发文文号</td><td ><label id=postingNumber>${aad.postingNumber }</label></td></tr>
+					<tr><td>发文时间</td><td><label id="postingDay">${aad.postingDay }</label></td></tr>
+					<tr><td>发文名称</td><td><label id="postingName">${aad.postingName }</label></td></tr>
+					<tr><td>任免类型</td><td><label id="workingType">${aad.workingType }</label></td></tr>
+					<tr><td>备注</td><td><label id="remark">${aad.remark }</label></td></tr>
+				</table>
+			</div>
+			<c:forEach items = "${pus }" var = "pu">
+			<div class="extenceInfo">
+				<div class="exTitle"><strong>任免详情</strong></div>
+				<table class="exInfo" cellspacing="0">
+					<tr><td>任免人员</td><td><label id="userName">${pu.user.name }</label></td></tr>
+					<tr><td>任免/免职</td><td><label id="appointOrRemove">${pu.appointOrRemove eq 1 ? "任职" : "免职"}</label></td></tr>
+					<tr><td>任免类型</td><td><label id="type">${ide:getItem('postAndDissType',pu.type) }</label></td></tr>
+					<tr><td>任免原因</td><td><label id="reasion">${pu.reasion }</label></td></tr>
+					<tr><td>任免岗位</td><td><label id="position">${orgMap[pu.position.department].name }${ pu.position.positionName }</label></td></tr>
+					<tr><td>任免级别</td><td><label id="grade">${pu.grade }</label></td></tr>
+					<tr><td>备注</td><td><label id="remark">${pu.remark }</label></td></tr>
+				</table>
+			</div>
+			</c:forEach>
+			<script type="text/javascript">
+				$(function(){
+					$(".extenceInfo:odd").css("margin-left","0");
+					$(".extenceInfo:even").css("margin-left","1.9%");
+				})
+			</script>
+			
+			<div class="tb_sub_btns">
+				<input type="button" value="关闭" class="cancel" onClick="art.dialog.close()" />
+			</div>
+		</div>
+</body>
+</html>

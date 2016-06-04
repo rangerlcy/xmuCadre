@@ -1,0 +1,97 @@
+﻿$(function(){
+//	initContentFrame();//初始化内容区域的大小
+	bindTopMenuClickEvent();//绑定一级菜单事件
+	//bindChildMenuClickEvent();//绑定子菜单点击事件
+	//show first menu;
+	$(".topMenu:eq(0)").click();
+});
+/**
+ * 初始化内容区域的大小
+ */
+//function initContentFrame(){}
+//window.onload=function(){
+	//$("#iframe1").css({"height":($(window).height()-135)+"px"});
+//	$(".fun_nav").css({"height":($(window).height()-100)+"px"});
+//	$(".white").css({"height":($(window).height()-100)+"px"});
+//	$(".fun_a").css({"height":($(window).height()-100)+"px"});
+//	$(".content").css({"height":($(window).height()-100)+"px"});
+//};
+//window.onresize=function(){
+	//$("#iframe1").css({"height":($(window).height()-135)+"px"});
+//	$(".fun_nav").css({"height":($(window).height()-100)+"px"});
+//	$(".white").css({"height":($(window).height()-100)+"px"});
+//	$(".fun_a").css({"height":($(window).height()-100)+"px"});
+//	$(".content").css({"height":($(window).height()-100)+"px"});
+//};
+/**
+ * 绑定一级菜单事件
+ */
+function bindTopMenuClickEvent(){
+	$(".topMenu").click(function(){
+		
+		//变换一级菜单样式
+		$(".topMenu").each(function(){
+			var onClass = $(this).attr("onClass");
+			$(this).removeClass(onClass);
+		});
+		var onClass = $(this).attr("onClass");
+		$(this).addClass(onClass);
+		
+		//隐藏所有的二级、三级菜单，显示当前一级菜单下的所有子菜单
+		var topId = $(this).attr("topId");
+		$(".fun_nav>.fun_a").hide();
+		var div = $(".fun_nav div[parentId='"+topId+"']");
+		div.show();
+		
+		//显示第一个二级或三级子菜单
+		var firstMenu = div.find(".bottom_menu:eq(0)");
+		firstMenu.click();
+		
+	});
+}
+/**
+ * 绑定子菜单点击事件
+ */
+function bindChildMenuClickEvent(){
+	$(".l_menu h3").click(function(){
+		if($(this).siblings(".l_cd").is(":hidden")){
+			$(".l_cd").slideUp(300);//全部收起
+			$(this).siblings(".l_cd").slideDown(300);//当前的展开
+			
+			//ie6
+			if($.browser.msie && $.browser.version=="6.0"){//如果是IE6
+				$(".l_div_box").each(function(){//删除所有展开选中的class
+					$(this).removeClass($(this).attr("id")+"_on_ie6");
+				});
+				$(this).parents().addClass($(this).parents().attr("id")+"_on_ie6");//设置当前的class
+			}else{
+				$(".l_div_box").removeClass("on");
+				$(this).parents().addClass("on");
+			}
+		}else{
+			$(this).siblings(".l_cd").slideUp(300);
+			//ie6
+			if($.browser.msie && $.browser.version=="6.0"){
+				$(this).parents().removeClass($(this).parents().attr("id")+"_on_ie6");
+			}else{
+				$(this).parents().removeClass("on");
+			}
+		}
+		if($(this).hasClass("url_elem")) {
+			return;
+		} else {
+			$(this).next().find(".url_elem:eq(0)").click();
+		}
+	});
+}
+
+function FrameURL(url,elem,rootUrl){
+	$(".l_cd span").removeClass("on");
+	$(elem).parents().addClass("on");
+	if(url == rootUrl){
+		$("#iframe1").attr("src",rootUrl+"/common/404.jsp");
+	}else{
+		$("#iframe1").attr("src",url);
+	}
+
+}

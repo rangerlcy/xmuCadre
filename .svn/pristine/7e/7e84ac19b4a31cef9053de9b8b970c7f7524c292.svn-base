@@ -1,0 +1,27 @@
+log4j.rootLogger=info, console,fileOut,errorFileOut
+
+## write log to console
+log4j.appender.console=org.apache.log4j.ConsoleAppender 
+log4j.appender.console.layout=org.apache.log4j.PatternLayout 
+log4j.appender.console.layout.ConversionPattern= [%t][%p][%d{yyyy-MM-dd HH:mm:ss,SSS}] %l - %m%n
+
+## write log to log.log 
+log4j.appender.fileOut = org.apache.log4j.DailyRollingFileAppender  
+log4j.appender.fileOut.Threshold = info
+log4j.appender.fileOut.File = ${catalina.home}/logs/log.log  
+log4j.appender.fileOut.Append = true  
+log4j.appender.fileOut.layout = org.apache.log4j.PatternLayout  
+log4j.appender.fileOut.layout.ConversionPattern = [%t][%p][%d{yyyy-MM-dd HH\:mm\:ss,SSS}] %l - %m%n 
+  
+## write error log to error.log
+log4j.appender.errorFileOut = org.apache.log4j.DailyRollingFileAppender  
+log4j.appender.errorFileOut.File = ${catalina.home}/logs/error.log
+log4j.appender.errorFileOut.Append = true  
+log4j.appender.errorFileOut.Threshold = error
+log4j.appender.errorFileOut.layout = org.apache.log4j.PatternLayout  
+log4j.appender.errorFileOut.layout.ConversionPattern = [%t][%p][%d{yyyy-MM-dd HH\:mm\:ss,SSS}] %l - %m%n 
+
+log4j.logger.java.sql.Connection=debug
+log4j.logger.java.sql.Statement=debug
+log4j.logger.java.sql.PreparedStatement=debug
+log4j.logger.org.hibernate.SQL=debug 

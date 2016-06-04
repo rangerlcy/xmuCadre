@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:dictionary="http://com.cadre.model.dictionary.xml"
+	targetNamespace="http://com.cadre.model.dictionary.xml" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xs:element name="dicts">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="dict" type="dictionary:dictType" minOccurs="0"  maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="dictType">
+	   <xs:sequence>
+           <xs:element name="item" type="dictionary:itemType" minOccurs="0" maxOccurs="unbounded"/>
+       </xs:sequence>
+       <xs:attribute name="name" use="required" type="xs:ID"/>
+       <xs:attribute name="desc" use="required" />
+	</xs:complexType>
+	
+	<xs:complexType name="itemType">
+	   <xs:attribute name="key" use="required" type="xs:string"/>
+       <xs:attribute name="value" use="required" type="xs:string"/>
+	</xs:complexType>
+	
+</xs:schema>

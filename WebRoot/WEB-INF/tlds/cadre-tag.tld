@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"  
+    version="2.0">  
+    <description>自定义标签类</description>  
+    <tlib-version>1.0</tlib-version>  
+    <short-name>ide</short-name>  
+    <uri></uri>
+    <tag>  
+        <description>分页标签</description>  
+        <name>page</name>  
+        <tag-class>com.cadre.model.page.PageTag</tag-class>  
+        <body-content>empty</body-content>
+  
+        <attribute>  
+            <description> Collection of items to iterate over.</description>  
+            <name>page</name>  
+            <required>true</required>  
+            <rtexprvalue>true</rtexprvalue>  
+            <type>com.cadre.model.page.Page</type>  
+        </attribute>
+        <attribute>
+            <name>searchForm</name>  
+            <required>false</required>  
+        </attribute>
+        <attribute>
+            <name>pageId</name>  
+            <required>false</required>  
+        </attribute>  
+    </tag>   
+    <function>
+	    <name>getAllEthnicity</name>
+	    <function-class>com.cadre.model.view.ViewFunction</function-class>
+	    <function-signature>java.util.List getAllEthnicity()</function-signature>
+	    <example>
+	      ${ide:getAllEthnicity()}
+	    </example>
+    </function>
+    <function>
+	    <name>getAllExportTitle</name>
+	    <function-class>com.cadre.model.view.ViewFunction</function-class>
+	    <function-signature>java.util.List getAllExportTitle()</function-signature>
+	    <example>
+	      ${ide:getAllExportTitle()}
+	    </example>
+    </function>
+    <function>
+	    <name>getEthnicityName</name>
+	    <function-class>com.cadre.model.view.ViewFunction</function-class>
+	    <function-signature>java.lang.String getEthnicityName(java.lang.String)</function-signature>
+	    <example>
+	      ${ide:getEthnicityName("01")}
+	    </example>
+    </function>
+    <function>
+    	<name>getAllPolicitalStatus</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.util.List getAllPolicitalStatus()</function-signature>
+    	 <example>
+    	 	 ${ide:getAllPolicitalStutus()}
+    	 </example>
+    </function>
+    <function>
+    	<name>getAllHealthStatus</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.util.List getAllHealthStatus()</function-signature>
+    	 <example>
+    	 	 ${ide:getAllHealthStatus()}
+    	 </example>
+    </function>
+    <function>
+    	<name>getAllCheckCase</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.util.List getAllCheckCase()</function-signature>
+    	 <example>
+    	 	 ${ide:getAllCheckCase()}
+    	 </example>
+    </function>
+    <function>
+    	<name>getAllIdentityTypeLabel</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.util.List getAllIdentityTypeLabel()</function-signature>
+    	 <example>
+    	 	 ${ide:getAllIdentityTypeLabel()}
+    	 </example>
+    </function>
+    <function>
+    	<name>getIdentityTypeLabelName</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.util.List getIdentityTypeLabelName(java.lang.String)</function-signature>
+    	 <example>
+    	 	 ${ide:getIdentityTypeLabelName('01')}
+    	 </example>
+    </function>
+    <function>
+    	<name>getCardType</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.lang.String getCardType(java.lang.String)</function-signature>
+    	 <example>
+    	 	 ${ide:getCardType('01')}
+    	 </example>
+    </function>
+     <function>
+    	<name>getCheckCase</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.lang.String getCheckCase(java.lang.String)</function-signature>
+    	 <example>
+    	 	 ${ide:getCheckCase('01')}
+    	 </example>
+    </function>
+    <function>
+    	<name>getPolicitalStatusName</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.lang.String getPolicitalStatusName(java.lang.String)</function-signature>
+    	<example>
+    		${ide:getPolicitalStatusName('01')}
+    	</example>
+    </function>
+    <function>
+    	<name>getAsseResult</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.lang.String getAsseResult(java.lang.String)</function-signature>
+    	<example>
+    		${getAsseResult('01')}
+    	</example>
+    </function>
+     <function>
+    	<name>getAllAsseResult</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.util.List getAllAsseResult()</function-signature>
+    	 <example>
+    	 	 ${ide:getAllAsseResult()}
+    	 </example>
+    </function>
+    <function>
+    	<name>getPositionName</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.lang.String getPositionName(java.lang.String)</function-signature>
+    	<example>
+    		${getPositionName('01')}
+    	</example>
+    </function>
+     <function>
+    	<name>getAllPositionName</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.util.List getAllPositionName()</function-signature>
+    	 <example>
+    	 	 ${ide:getAllPositionName()}
+    	 </example>
+    </function>
+    <function>
+    	<name>getPositionType</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.lang.String getPositionType(java.lang.String)</function-signature>
+    	<example>
+    		${getPositionType('01')}
+    	</example>
+    </function>
+     <function>
+    	<name>getAllPositionType</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.util.List getAllPositionType()</function-signature>
+    	 <example>
+    	 	 ${ide:getAllPositionType()}
+    	 </example>
+    </function>
+    <function>
+    	<name>getInstitutionType</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.lang.String getInstitutionType(java.lang.String)</function-signature>
+    	<example>
+    		${getPositionLevel('01')}
+    	</example>
+    </function>
+    <function>
+    	<name>getAllInstitutionType</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.lang.String getAllInstitutionType()</function-signature>
+    	<example>
+    		${getPositionLevel('01')}
+    	</example>
+    </function>
+    <function>
+    	<name>getPositionLevel</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.lang.String getPositionLevel(java.lang.String)</function-signature>
+    	<example>
+    		${getPositionLevel('01')}
+    	</example>
+    </function>
+     <function>
+    	<name>getAllPositionLevel</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	 <function-signature>java.util.List getAllPositionLevel()</function-signature>
+    	 <example>
+    	 	 ${ide:getAllPositionLevel()}
+    	 </example>
+    </function>
+    <function>
+	    <name>getEducationName</name>
+	    <function-class>com.cadre.model.view.ViewFunction</function-class>
+	    <function-signature>java.lang.String getEducationName(java.lang.String)</function-signature>
+	    <example>
+	      ${ide:getEducationName("1")}
+	    </example>
+    </function>
+    <function>
+    	<name>getAllItems</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.util.List getAllItems(java.lang.String)</function-signature>
+    	<example>
+    		${ide:getAllItems("gender")}
+    	</example>
+    </function>
+     <function>
+    	<name>getItem</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.util.String getItem(java.lang.String,java.lang.String)</function-signature>
+    	<example>
+    		${ide:getItem("gender","01")}
+    	</example>
+    </function>
+    <function>
+    	<name>getItemCode</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.util.String getItemCode(java.lang.String,java.lang.String)</function-signature>
+    	<example>
+    		${ide:getItemCode("gender","男")}
+    	</example>
+    </function>
+    <function>
+    	<name>getAllDegree</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.util.String getAllDegree()</function-signature>
+    	<example>
+    		${ide:getAllDegree()}
+    	</example>
+    </function>
+    <function>
+    	<name>getAllLevel</name>
+    	<function-class>com.cadre.model.view.ViewFunction</function-class>
+    	<function-signature>java.util.String getAllLevel()</function-signature>
+    	<example>
+    		${ide:getAllLevel()}
+    	</example>
+    </function>
+</taglib> 
+
+ 

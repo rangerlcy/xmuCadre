@@ -1,0 +1,25 @@
+package com.cadre.service.infoManager;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cadre.dao.BaseDao;
+import com.cadre.pojo.Relation;
+import com.cadre.pojo.User;
+
+@Service
+public class RelationService {
+
+	@Autowired
+	BaseDao<Relation> relationDao;
+	
+	public List<Relation> findByUser(User user){
+		if (null == user) return null;
+		String hql = " from Relation where (delFlag is null or delFlag = 1) and user = ?";
+		return relationDao.queryList(hql, new Object[]{user});
+		
+		
+	}
+}

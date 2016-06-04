@@ -1,0 +1,714 @@
+package com.cadre.controller.infoManager;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.enterprise.inject.New;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.cadre.common.ViewLocation;
+import com.cadre.common.WebApplication;
+import com.cadre.controller.pojo.BirthPlace;
+import com.cadre.controller.pojo.OrigionPlace;
+import com.cadre.controller.pojo.UserShowView;
+import com.cadre.controller.pojo.UserSimple;
+import com.cadre.controller.sys.UserController;
+import com.cadre.model.page.Page;
+import com.cadre.model.utils.DateUtil;
+import com.cadre.model.utils.DigestUtil;
+import com.cadre.model.utils.StringUtil;
+import com.cadre.model.view.ViewFunction;
+import com.cadre.pojo.AdministrationLevelHistory;
+import com.cadre.pojo.AdministrationWorkHistory;
+import com.cadre.pojo.Country;
+import com.cadre.pojo.EducationHistory;
+import com.cadre.pojo.Place;
+import com.cadre.pojo.Relation;
+import com.cadre.pojo.User;
+import com.cadre.service.infoManager.AdministrationWorkService;
+import com.cadre.service.infoManager.AdminstrationLevelService;
+import com.cadre.service.infoManager.EducationHistoryService;
+import com.cadre.service.infoManager.RelationService;
+import com.cadre.service.infoManager.TableMappingService;
+import com.cadre.service.sys.CountryService;
+import com.cadre.service.sys.OrganizationService;
+import com.cadre.service.sys.PlaceService;
+import com.cadre.service.sys.SysRoleService;
+import com.cadre.service.sys.UserService;
+import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.sun.org.apache.regexp.internal.recompile;
+
+@Controller
+@RequestMapping(ViewLocation.FOLDER_INFOMANAGER_USERINFO)
+public class UserInfoController {
+	private Logger logger = LogManager.getLogger(UserController.class);
+	
+	@Autowired
+	UserService userService;
+	@Autowired
+	OrganizationService organizationService;
+	@Autowired
+	SysRoleService sysRoleService;
+	@Autowired
+	HttpSession session;
+	@Autowired
+	TableMappingService tableMappingService;
+	@Autowired
+	PlaceService placeService;
+	@Autowired
+	CountryService countryService;
+	@Autowired
+	AdminstrationLevelService adminstrationLevelService;
+	@Autowired
+	AdministrationWorkService administrationWorkService;
+	@Autowired
+	EducationHistoryService educationHistoryService;
+	@Autowired
+	RelationService relationService;
+	
+	int pageSize=10;
+	
+	@RequestMapping("userList")
+	public String userList(Integer currPage,String queryStr,Model model) throws Exception{	
+		try {
+			if(currPage == null || currPage == -1) currPage = 1;//默认显示第一页
+			Page<UserShowView> queryList = userService.findUserByPage(queryStr, currPage, pageSize);
+			model.addAttribute("queryStr", queryStr);//查询条件返回jsp页面
+			model.addAttribute("queryList",queryList);//查询结果列表
+			model.addAttribute("isSuperSearch", "0");
+			model.addAttribute("today",new Date());
+			//boolean isAdmin = WebApplication.getCurrUser().isAdmin();
+			//boolean hasAdminQx = sysUserService.findUserHasRole(WebApplication.getCurrUser().getId());
+			//model.addAttribute("isAdmin", isAdmin||hasAdminQx);
+			return ViewLocation.FOLDER_INFOMANAGER_USERINFO+"/userList";
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new Exception(e.getMessage());
+		}
+	}
+	/**
+	 * 高级搜索功能
+	 * @param currPage
+	 * @param name
+	 * @param sex
+	 * @param IdNumber
+	 * @param birthdayOperator
+	 * @param birthday
+	 * @param ageOperator
+	 * @param age
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+
+	@RequestMapping("/SuperSearchUserList")
+	public String SuperSearchUserList(Integer currPage,String name,String sex,
+			String idNumber,String birthdayOperator,Date birthday,
+			String ageOperator,String age,
+			String positionName,String positionNameOperator,Model model) throws Exception{
+		
+		if(currPage == null || currPage == -1) currPage = 1;//默认显示第一页
+		Page<UserShowView> queryList = userService.findSearchUserByPage(name,sex,idNumber,birthday,birthdayOperator,
+				age,ageOperator,positionName,positionNameOperator, currPage, pageSize);
+		
+		model.addAttribute("queryList",queryList);//查询结果列表
+		model.addAttribute("sex",sex);
+		model.addAttribute("name", name);
+		model.addAttribute("idNumber",idNumber);
+		model.addAttribute("birthdayOperator", birthdayOperator);
+		model.addAttribute("birthday",birthday);
+		model.addAttribute("today",new Date());
+		model.addAttribute("ageOperator", ageOperator);
+		model.addAttribute("age", age);
+		model.addAttribute("isSuperSearch", "1");
+		model.addAttribute("positionName", positionName);
+		model.addAttribute("positionNameOperator", positionNameOperator);
+		return ViewLocation.FOLDER_INFOMANAGER_USERINFO+"/userList";
+	}
+	/**
+	 * 打开表头选取界面
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/openTitleCheck")
+	public String openTitleCheck(Model model){
+		return ViewLocation.FOLDER_INFOMANAGER_USERINFO+"/openTitleCheck";
+	}
+	
+	/**
+	 * 导出员工信息
+	 * @param queryStr
+	 * @param queryDept
+	 * @param isNew
+	 * @param titles
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("/exportUser")
+	public void exportUser(String queryStr,String isSuperSearch,String name,String sex,
+			String idNumber,String birthdayOperator,Date birthday,
+			String ageOperator,String age,String positionName,
+			String positionNameOperator,String titles,HttpServletResponse response) throws Exception{
+		if (StringUtil.isNotBlank(isSuperSearch)){
+			List<UserShowView> userList = null;
+			if ("0".equals(isSuperSearch)){
+				if (StringUtil.isNotBlank(queryStr)) {
+					try {
+						queryStr = java.net.URLDecoder.decode(queryStr, "UTF-8");
+
+					} catch (Exception e) {
+						logger.error("导出文件解码错误：" + e.getMessage());
+						throw new Exception(e.getMessage());
+					}
+				}
+				userList = userService.findUserForExport(queryStr);
+			}else if ("1".equals(isSuperSearch)){
+				if (StringUtil.isNotBlank(name)) {
+					try {
+						name = java.net.URLDecoder.decode(name, "UTF-8");
+						
+
+					} catch (Exception e) {
+						logger.error("导出文件解码错误：" + e.getMessage());
+						throw new Exception(e.getMessage());
+					}
+				}
+				if (StringUtil.isNotBlank(positionName)) {
+					try {
+						positionName = java.net.URLDecoder.decode(positionName, "UTF-8");
+						
+
+					} catch (Exception e) {
+						logger.error("导出文件解码错误：" + e.getMessage());
+						throw new Exception(e.getMessage());
+					}
+				}
+				userList = userService.findSuperUserForExport(name,sex,idNumber,birthday,birthdayOperator,ageOperator,age,positionName,positionNameOperator);
+			}
+			if (userList.size()==0){
+				return ;
+			}
+			String fileName = "";
+			String dir = WebApplication.getSession().getServletContext().getRealPath("/resources/downloadFile/");
+			String tempFileName = dir+"/user.xls";
+			fileName= "user"+System.currentTimeMillis()+".xls";
+			Workbook wb = Workbook.getWorkbook(new File(tempFileName));
+	    	WritableWorkbook wwb = Workbook.createWorkbook(new File(dir+"/"+fileName), wb); 
+	        WritableSheet sheet =wwb.getSheet(0);
+	        String[] titleArr = titles.split(",");
+	        Label titleLabel = null;
+	        Label valueLabel = null;
+	  		for(int n=0;n<titleArr.length;n++){
+	  			//先添加标题
+	  			titleLabel = new Label(n,0,ViewFunction.getExportTitleName(titleArr[n]));
+	  			sheet.addCell(titleLabel);
+	  		}
+	  		titleLabel = null;
+		    valueLabel = null;
+		    Map<String, String> placeMap = this.getPlaceMap();
+		    Map<String, String> countryMap = this.getCountryMap();
+	  		for(int i=0;i<userList.size();i++){//循环写数据
+	      		for(int n=0;n<titleArr.length;n++){
+	      			String value = tableMappingService.getUserColVal(userList.get(i), titleArr[n],placeMap,countryMap);
+	      			valueLabel = new Label(n,i+1,value);
+	      			sheet.addCell(valueLabel);
+	      		}
+	      	}
+	  	
+	  		wwb.write();  
+	    	wwb.close();
+	    	placeMap =null;
+	  		countryMap = null;
+	  		titleLabel = null;
+		    valueLabel = null;
+	    	BufferedInputStream bis = null;
+			BufferedOutputStream bos = null;
+			try {
+				response.setContentType("video/mpeg4; charset=utf-8");
+				response.setHeader("Content-Disposition",
+						"attachment;filename=\"user.xls\"");
+				File file = new File(dir+"/"+fileName);
+				int len = 0;    
+				byte[] buf = new byte[1024];    
+				bis = new BufferedInputStream(new FileInputStream(file));  
+				bos = new BufferedOutputStream(response.getOutputStream());    
+				while (-1 != (len = bis.read(buf, 0, buf.length))) {   
+	                bos.write(buf, 0, len);   
+	            }
+			} catch (Exception e) {
+				logger.error("导出员工信息错误:" + e.getMessage());
+				throw new Exception("导出员工信息错误:" + e.getMessage());
+			} finally {
+				try {
+					if (bis != null)   
+		                bis.close();   
+		            if (bos != null)   
+		                bos.close();
+				} catch (Exception e2) {
+					logger.error(e2.getMessage());
+				}
+				//删除临时文件
+				File f = new File(dir+"/"+fileName); 
+				if (f.exists()){
+					f.delete(); 
+				}
+			}
+			
+			
+		}
+		
+	}
+	/**
+	 * 跳转 添加员工
+	 * @return
+	 */
+	@RequestMapping("/openUserAdd")
+	public String openUserAdd(Model model){
+		List<Place> provList = placeService.queryAllProv();
+		model.addAttribute("provList", provList);
+		
+		//查询国籍
+		List<Country> countryList = countryService.queryAllCountrys();
+		model.addAttribute("countryList", countryList);
+		return ViewLocation.FOLDER_INFOMANAGER_USERINFO+"/userAdd";
+	}
+	
+	
+	
+	/**
+	 * 添加员工
+	 * @param user
+	 * @return
+	 */
+
+	@RequestMapping("/userAdd")
+	public String userAdd(@RequestParam(value="photo",required = false) MultipartFile[] photos,User user,BirthPlace birthPlace,OrigionPlace origionPlace,Model model) throws Exception{
+		if (null == user){
+			model.addAttribute("errMsg", "未知的原因");
+			return ViewLocation.FOLDER_MSGCOMMON + "/fail";
+		}
+		if (StringUtil.isBlank(user.getName()) || StringUtil.isBlank(user.getGender()) || StringUtil.isBlank(user.getIdentifyNum())){
+			model.addAttribute("errMsg", "名字，性别，证件号码不能为空");
+			return ViewLocation.FOLDER_MSGCOMMON + "/fail";//入参数检验
+		}
+		try{
+			User ur = userService.findByIdentifyNumber(user.getIdentifyNum());
+			if (null != ur){
+				model.addAttribute("errMsg", "证件号"+user.getIdentifyNum()+"重复，此证件号已被注册，请检查输入的证件号");
+				return ViewLocation.FOLDER_MSGCOMMON + "/fail";
+			}
+			if (user.getIdentifyNum().length()<6){
+				model.addAttribute("errMsg", "证件号"+user.getIdentifyNum()+"不符合规格，请检查输入的证件号");
+				return ViewLocation.FOLDER_MSGCOMMON + "/fail";
+			}
+			String birthPlaceStr = birthPlace.toCodeString();
+			String origionPlaceStr = origionPlace.toCodeString();
+			user.setBirthPlace(birthPlaceStr);
+			user.setOriginPlace(origionPlaceStr);
+			user.setDelFlag(1);
+			user.setUserName(user.getIdentifyNum());
+			/* 密码为证件号后六位*/
+			user.setPassWord(DigestUtil.encryptPWD(DigestUtil.encryptPWD(user.getIdentifyNum().substring(user.getIdentifyNum().length()-6,user.getIdentifyNum().length()))));
+			user.setNumber(createNumber());
+			String roleIds = "2";//普通员工角色
+			String PhotoUrl = "";
+			for (MultipartFile photoFile : photos){
+				if(photoFile.getOriginalFilename() != null && !"".equals(photoFile.getOriginalFilename())){
+					String fileName = photoFile.getOriginalFilename();//上传的文件名
+					String[] nameArr = fileName.split("\\.");
+					String suff = nameArr[nameArr.length-1];
+					fileName = user.getNumber().toString()+"T"+UUID.randomUUID().toString()+"."+suff;
+					String path = WebApplication.getSession().getServletContext().getRealPath("/resources/uploadFile/user/");
+					File targetFile = new File(path, fileName);  
+					if(!targetFile.exists()){  
+						targetFile.mkdirs();  
+					}
+					if (PhotoUrl.equals(""))
+						PhotoUrl ="/resources/uploadFile/user/"+fileName;
+					else
+						PhotoUrl = PhotoUrl+","+ "/resources/uploadFile/user/"+fileName;
+					//保存  
+				
+					try {  
+						photoFile.transferTo(targetFile);  
+					} catch (Exception e) {  
+						throw new RuntimeException("照片保存异常"+e.getMessage()); 
+					} 			
+				}
+			}
+			user.setPhotoUrl(PhotoUrl);
+			userService.addUser(user, roleIds);
+			return ViewLocation.FOLDER_MSGCOMMON + "/success";
+		}catch(Exception e){
+			throw new Exception(e.getMessage());
+		}
+	}
+	/**
+	 * 删除用户
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("userDel")
+	@ResponseBody
+	public String userDel(Integer id,Model model){
+		if (id == null){
+			model.addAttribute("errMsg", "请不要擅自修改前台页面");
+			return "请不要擅自修改前台页面";
+		}
+		User user = userService.findById(id);
+		if (null == user){
+			model.addAttribute("errMsg","无此用户");
+			return "无此用户";
+		}
+		if (userService.isInOtherMK(user)){
+			model.addAttribute("errMsg","不能删除，与其他模块有关联");
+			return "不能删除，与其他模块有关联";
+		}
+		userService.deleteUser(id);
+		return "success";
+		
+		
+	}
+	/**
+	 * 员工详情页面
+	 * @return
+	 */
+	@RequestMapping("openUserDetail")
+	public String openUserDetail(Integer id,Model model){
+		if (null == id){
+			model.addAttribute("errMsg", "无此员工");
+			return ViewLocation.FOLDER_MSGCOMMON+"/fail";
+		}
+		User user  = userService.findById(id);
+		if (null == user){
+			model.addAttribute("errMsg", "无此员工");
+			return ViewLocation.FOLDER_MSGCOMMON+"/fail";
+		}
+		UserShowView usv = null;
+		AdministrationLevelHistory alh = null;
+		AdministrationWorkHistory awh = null;
+		usv = new UserShowView();
+		usv.setUser(user);
+		alh = adminstrationLevelService.findLastByUser(user);
+		if (alh != null)
+			usv.setAdministrationLevel(alh.getLevelName());
+		awh = administrationWorkService.findLastByUser(user);
+		if (awh != null){
+			usv.setAdministrationWorkName(awh.getJobName());
+			usv.setAdministrationWorkUnits(awh.getUnits());
+		}
+		
+		if(null != user.getBirthPlace() ){
+			if (user.getBirthPlace().length() == 6){
+				String bproc = placeService.queryNameByCode(user.getBirthPlace().substring(0, 2));
+				String bcity = placeService.queryNameByCode(user.getBirthPlace().substring(0,4));
+				String bdist = placeService.queryNameByCode(user.getBirthPlace());
+				model.addAttribute("bproc",bproc);
+				model.addAttribute("bcity",bcity);
+				model.addAttribute("bdist", bdist);
+			}
+		}
+		if(null != user.getOriginPlace()){
+			if (user.getOriginPlace().length() == 6){
+				String oproc = placeService.queryNameByCode(user.getOriginPlace().substring(0, 2));
+				String ocity = placeService.queryNameByCode(user.getOriginPlace().substring(0,4));
+				String odist = placeService.queryNameByCode(user.getOriginPlace());
+				model.addAttribute("oproc",oproc);
+				model.addAttribute("ocity",ocity);
+				model.addAttribute("odist",odist);
+			}
+		}
+	
+		model.addAttribute("userDetail", usv);
+		List<Place> provList = placeService.queryAllProv();
+		model.addAttribute("provList", provList);
+		List<Country> countryList = countryService.queryAllCountrys();
+		model.addAttribute("countryList", countryList);
+		
+		//学历学位
+		List<EducationHistory> educationHistories = educationHistoryService.findByUser(user);
+		model.addAttribute("educations", educationHistories);
+		List<Relation> relations = relationService.findByUser(user);
+		model.addAttribute("relations",relations);
+		return ViewLocation.FOLDER_INFOMANAGER_USERINFO +"/userInfo";
+		
+		
+	}
+	/**
+	 * 打开员工修改
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("openUserEdit")
+	public String openUserEdit(Integer id,Model model){
+		
+		
+		if (null == id){
+			model.addAttribute("errMsg", "无此员工");
+			return ViewLocation.FOLDER_MSGCOMMON+"/fail";
+		}
+		User user  = userService.findById(id);
+		if (null == user){
+			model.addAttribute("errMsg", "无此员工");
+			return ViewLocation.FOLDER_MSGCOMMON+"/fail";
+		}
+		UserShowView usv = null;
+		AdministrationLevelHistory alh = null;
+		AdministrationWorkHistory awh = null;
+		usv = new UserShowView();
+		usv.setUser(user);
+		alh = adminstrationLevelService.findLastByUser(user);
+		if (alh != null)
+			usv.setAdministrationLevel(alh.getLevelName());
+		awh = administrationWorkService.findLastByUser(user);
+		if (awh != null){
+			usv.setAdministrationWorkName(awh.getJobName());
+			usv.setAdministrationWorkUnits(awh.getUnits());
+		}
+		
+		if(null != user.getBirthPlace() && StringUtil.isNotBlank(user.getBirthPlace())){
+		
+			List<Place> bcityList = placeService.queryChildByCode(user.getBirthPlace().substring(0, 2));
+			List<Place> bdistList = placeService.queryChildByCode(user.getBirthPlace().substring(0,4));
+			model.addAttribute("bcityList",bcityList);
+			model.addAttribute("bdistList",bdistList);
+		}
+		if(null != user.getOriginPlace() && StringUtil.isNotBlank(user.getOriginPlace())){
+			List<Place> ocityList = placeService.queryChildByCode(user.getOriginPlace().substring(0, 2));
+			List<Place> odistList = placeService.queryChildByCode(user.getOriginPlace().substring(0,4));
+			model.addAttribute("ocityList",ocityList);
+			model.addAttribute("odistList",odistList);
+		}
+		
+		
+		
+		model.addAttribute("user", usv);
+		List<Place> provList = placeService.queryAllProv();
+		model.addAttribute("provList", provList);
+		List<Country> countryList = countryService.queryAllCountrys();
+		model.addAttribute("countryList", countryList);
+		return ViewLocation.FOLDER_INFOMANAGER_USERINFO +"/userEdit";
+		
+		
+	}
+	/**
+	 * 员工修改
+	 * @param user
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("userEdit")
+	public String userEdit(@RequestParam(value="photo",required = false) MultipartFile[] photos,User user,BirthPlace birthPlace,OrigionPlace origionPlace,Model model){
+		if (null == user || null == user.getId()){
+			return "noSuchUser";
+		}
+		User userEdit  = userService.findById(user.getId());
+		userEdit.setBeginSchoolWorkDay(user.getBeginSchoolWorkDay());
+		userEdit.setBeginWorkDay(user.getBeginWorkDay());
+		userEdit.setBirthPlace(birthPlace.toCodeString());
+		userEdit.setBirthDay(user.getBirthDay());
+	//	userEdit.setCheckCase(user.getCheckCase());
+		userEdit.setContectEmail(user.getContectEmail());
+		userEdit.setContectMobilePhone(user.getContectMobilePhone());
+		userEdit.setContectWorkPhone(user.getContectWorkPhone());
+		userEdit.setGender(user.getGender());
+		userEdit.setHealthStatus(user.getHealthStatus());
+		userEdit.setJoinPartyDay(user.getJoinPartyDay());
+		userEdit.setName(user.getName());
+		userEdit.setNation(user.getNation());
+		userEdit.setOriginPlace(origionPlace.toCodeString());
+		userEdit.setParty(user.getParty());
+		userEdit.setRemark(user.getRemark());
+		userEdit.setRetireDay(user.getRetireDay());
+		userEdit.setResearchDirection(user.getResearchDirection());
+		
+		String PhotoUrl = "";
+		for (MultipartFile photoFile : photos){
+			if(photoFile.getOriginalFilename() != null && !"".equals(photoFile.getOriginalFilename())){
+				String fileName = photoFile.getOriginalFilename();//上传的文件名
+				String[] nameArr = fileName.split("\\.");
+				String suff = nameArr[nameArr.length-1];
+				fileName = userEdit.getNumber().toString()+"T"+UUID.randomUUID().toString()+"."+suff;
+				String path = WebApplication.getSession().getServletContext().getRealPath("/resources/uploadFile/user/");
+				File targetFile = new File(path, fileName);  
+				if(!targetFile.exists()){  
+					targetFile.mkdirs();  
+				}
+				if (PhotoUrl.equals(""))
+					PhotoUrl ="/resources/uploadFile/user/"+fileName;
+				else
+					PhotoUrl = PhotoUrl+","+ "/resources/uploadFile/user/"+fileName;
+				//保存  
+			
+				try {  
+					photoFile.transferTo(targetFile);  
+				} catch (Exception e) {  
+					throw new RuntimeException("照片保存异常"+e.getMessage()); 
+				} 			
+			}
+		}
+		userEdit.setPhotoUrl(PhotoUrl);
+		
+		userService.updateUser(userEdit);
+		return ViewLocation.FOLDER_MSGCOMMON+"/success";
+	}
+	/**
+	 * 重置密码为证件号后六位
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("setPwd")
+	@ResponseBody
+	public String setPwd(Integer id){
+		if (null == id){
+			return "fail";
+		}
+		User user  = userService.findById(id);
+		if (null == user){
+			return "fail";
+		}
+		try {
+			user.setPassWord(DigestUtil.encryptPWD(user.getIdentifyNum().substring(user.getIdentifyNum().length() - 6,user.getIdentifyNum().length())));
+			userService.updateUser(user);
+			return "success";
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return "fail";
+		}
+		
+	}
+	/**
+	 * 判断员工号是否有人
+	 * @param number
+	 * @return
+	 */
+	@RequestMapping("existNumber")
+	@ResponseBody
+	public String existNumber(String number){
+		if (null == number){
+			return "fail";
+		}
+		User user  = userService.findByNumber(number);
+		
+		if (null == user){
+			return "fail";
+		}else {
+			return "exist";
+		}
+	}
+	/**
+	 * 判断该名字是否有对应用户存在
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping("existUserName")
+	@ResponseBody
+	@Transactional
+	public List<UserSimple> existUserName(String userName){
+		List<UserSimple> sList = new ArrayList<UserSimple>();
+		if (null == userName){
+			return sList;
+		}
+		
+		int count = userService.queryCountByName(userName);
+		if(count <= 0){
+			return sList;
+		}
+		else{
+			
+			List<User> uList= userService.findUsersByName(userName);
+			UserSimple userSimple =null;
+			for (User user : uList){
+				userSimple = new UserSimple();
+				userSimple.setName(user.getName());
+				userSimple.setId(user.getId());
+				sList.add(userSimple);
+			}
+			userSimple = null;
+			return sList;
+		}
+		
+	}
+	
+	/**
+	 * 生成员工号
+	 * 生成规则 年份+序号
+	 * @return
+	 * @throws Exception
+	 */
+	
+	private String createNumber() throws Exception{
+		try {
+			String year = DateUtil.nowDate().substring(0,4);
+			Integer number = userService.queryMaxNumber(year);
+			if(number == null){
+				return year+"100001";
+			}else{
+				return number.toString();
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new Exception(e.getMessage());
+		}
+	}
+//	private Map<String,String> getOrgMap(){
+//		//组织机构
+//		
+//  		List<Organization> orgList = organizationService.queryAll();
+//  		Map<String,String> orgMap = new HashMap<String, String>();
+//		for(Organization org : orgList){
+//			orgMap.put(org.getCode(), org.getName());
+//		}
+//		return orgMap;
+//	}
+	private Map<String,String> getCountryMap(){
+		//国籍
+
+  		List<Country> countryList = countryService.queryAllCountrys();
+  		Map<String,String> countryMap = new HashMap<String, String>();
+		for(Country ct : countryList){
+			countryMap.put(ct.getCode(), ct.getName());
+		}
+		return countryMap;
+	}
+	
+	private Map<String,String> getPlaceMap(){
+		//籍贯
+
+  		List<Place> placeList = placeService.queryAll();
+  		Map<String,String> placeMap = new HashMap<String, String>();
+		for(Place pc : placeList){
+			placeMap.put(pc.getCode(), pc.getName());
+		}
+		return placeMap;
+	}
+
+}

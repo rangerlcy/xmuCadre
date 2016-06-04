@@ -1,0 +1,133 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+  <head>
+    	<%@ include file="/common/common.jsp"%>
+		<%@ taglib uri="/WEB-INF/tlds/cadre-tag.tld" prefix="ide" %>
+		<script  type="text/javascript" src="${res}/js/artDialog/artDialog.js?skin=blue"></script>
+		<title>厦门大学干部信息管理系统</title>
+		<link rel="stylesheet" href="${res }/css/ny.css" type="text/css"  />
+		<script type="text/javascript" src="${res }/js/DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="${res }/js/tableType.js"></script>
+  </head>
+  
+  <body class="tb_940">
+  		<!-- 人员搜索输入框！ -->
+ 		<input type="text" id="searchUserName" name="searchUserName" value=""/>
+ 		<!-- 搜索结果显示 -->
+ 		<div id="searchResultOutput">
+ 		</div>
+ 		<!-- 人员录入框 -->
+ 		<div id="ShowUsers">
+ 			<form action="${ctx}/userTrain/UserTrainInfo/saveTrainUsers.do" method="post">
+ 				<table  class="basicInfo" cellspacing="0">
+					<tr>
+						<td>姓名</td>
+						<td>时任职岗位</td>
+						<td>时任行政级别</td>
+						<td>时聘专业技术职务</td>
+						<td>操作</td>
+					</tr>
+				</table>
+			 	<div class="tb_sub_btns">
+					<input type="submit" value="确定" class="add" id="saveBtn" /> 
+					<input type="button" value="取消" class="cancel" onClick="art.dialog.close()" />
+				</div>
+			</form>
+ 		</div>
+ 		
+
+ 		
+ 		
+ <!-- ------------------------------------------------------------------------------------------------------------------------------- -->	
+ 		
+ 	<script>
+ 		$(document).ready(function(){
+ 			//$("#searchUserName").autocomplete()
+ 			var trainId = ${trainId };
+ 			var c,sum = -1;
+ 			//sum为增加人员个数变量
+ 			$("#searchUserName").keyup(function(){//搜索姓名符合的人员
+ 				$("#searchResultOutput").empty();
+ 				if ($("#searchUserName").val() != ""){
+	 				$.post("${ctx}/userTrain/UserTrainInfo/existUserName.do",{userName:$("#searchUserName").val()},function(result){//用名字查user库中id号码
+	 					var html="<ul>";
+	 					for (var i= 0;i< result.length;i++){
+	 						html+="<li><span data=\"" + result[i].id + "\" class=\"forChoose\">" + result[i].name + "</span><label>" + result[i].identifyNum + "</label></li>";
+	 					}
+	 					html+="</ul>";
+	 					$("#searchResultOutput").append(html);
+	 						
+	 					$(".forChoose").click(function(){
+	 						var userId=$(this).attr("data");
+	 						c=0;
+	 						//判断人员是否重复
+	 						$(".haveChoose").each(function(){
+	 							if ($(this).attr("value")==userId) c=1;
+	 						});
+	 						if (c==1) return;
+
+	 						//在下方表格中显示所选人员
+	 						$.post("${ctx}/userTrain/UserTrainInfo/showTrainUserSimple.do",{userId:userId,trainId: trainId},function(resultOUI){
+	 							//positionId小于0代表该人员已在事件中
+	 							if (resultOUI.positionSimple.id < 0){
+	 								art.dialog.alert("该人员已存在");
+	 							}
+	 							else{
+		 							sum = sum + 1;
+		 							var userInfo="";
+		 							userInfo+="<tr><td  class=\"haveChoose\" value='" +  resultOUI.userId + "'>"
+		 								+ "<input type='hidden' name=\"trainUserSimples[" + sum + "].userId\" value=\"" + resultOUI.userId + "\"\>"
+		 								+ "<input type='hidden' name=\"trainUserSimples[" + sum + "].trainId\" value=\"" + trainId + "\"\>"
+		 								+ "<input type='hidden' name=\"trainUserSimples[" + sum + "].positionId\" value=\"" + resultOUI.positionSimple.id + "\"\>"
+		 								+ "<input type='hidden' name=\"trainUserSimples[" + sum + "].skillId\" value=\"" +resultOUI.skillId + "\"\>"
+		 								+ resultOUI.userName
+		 								+ "</td><td>" + resultOUI.positionSimple.acadmyName + resultOUI.positionSimple.departmentName + resultOUI.positionSimple.positionName
+		 								+ "</td><td>" + resultOUI.positionSimple.positionLevelName 
+		 								+ "</td><td>" + resultOUI.skillName
+		 								+ "</td><td tid='"+resultOUI.userId+"'> "
+		 								+ "<a class=\"deleteUser\"> 删除</a> &nbsp;"
+		 								+ "<a class=\"userDetail\">详情</a></td>"
+		 								+"</tr>";
+		 							$("#ShowUsers .basicInfo").append(userInfo);
+		 							//删除已选人员
+		 							$(".deleteUser").click(function(){
+		 								$(this).parent().parent().remove();
+		 							});
+		 							$(".userDetail").click(function(){
+		 								var id = $(this).parent().attr("tid");
+		 								art.dialog.open(
+										"${ctx}/infoManager/userInfo/openUserDetail.do?id="+id,
+										{ title: "用户详情", lock: true, width: 996, height: 600}
+										);
+		 							});
+		 							
+		 						};
+	 						},"json");
+	 						$("#searchResultOutput").html('');
+	 						$("#searchUserName").val('');
+	 					});		
+	 				},"json");
+	 			};
+	 		});
+	 		$("#searchUserName").focus(function(){
+	 			$(this).keyup();
+	 		});
+			$("#searchUserName").bind("blur.hide",function(){
+				$("#searchResultOutput").html('');
+			});
+			$("#searchResultOutput").hover(function(){//进入失去函数绑定
+				$("#searchUserName").unbind("blur.hide");
+			},function(){//出去获取函数绑定
+				$("#searchUserName").bind("blur.hide",function(){
+					$("#searchResultOutput").html('');
+				});
+			});
+ 		});
+	</script>
+  		
+  		
+  </body>
+</html>

@@ -1,0 +1,441 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+  <head>
+    	<%@ include file="/common/common.jsp"%>
+		<%@ taglib uri="/WEB-INF/tlds/cadre-tag.tld" prefix="ide" %>
+		<script  type="text/javascript" src="${res}/js/artDialog/artDialog.js?skin=blue"></script>
+		<title>厦门大学干部信息管理系统</title>
+		<link rel="stylesheet" href="${res }/css/ny.css" type="text/css"  />
+		<script type="text/javascript" src="${res}/js/DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="${res}/js/photo.js"></script>
+  </head>
+	<body>
+	<div class="extenceInfo appoint" id="appointRSC" index="-1" style="display:none">
+				<div class="exTitle">
+					<strong>人员任免信息(任)</strong>
+					<span onclick="deleteDismiss(this)">移除</span>
+					
+					<span class="toggleTag" style="float:right">缩起↑</span>
+				</div>
+				<table class="exInfo" cellspacing="0">
+					<tr id="sec" >
+						<td>任免人员</td>
+						<td>
+							<input name="" type="text" class="txt required" onfocus = "userNameBlur(this)" onkeyup="userNameBlur(this)"/>
+							<label></label>
+							<div class="absoluteDiv ml60"></div>
+							<input type="hidden" class="userId" name="aadPaperItems[0].userId"/>
+						</td>
+					</tr>
+					<tr><td>任免</td>
+						<td>
+							<label>任职</label>
+							<input type="hidden" name="aadPaperItems[0].appointOrRemove" value="1" />
+								
+						</td></tr>
+					<tr><td>任免类型</td>
+						<td>
+							<select name="aadPaperItems[0].type">
+								<option value="" selected>请选择</option>
+								<c:forEach items="${ide:getAllItems('postAndDissType') }" var="pt">
+									<option value="${pt.key }">${pt.value }</option>
+								</c:forEach>			
+							</select>
+						</td></tr>
+					<tr><td>任免原因</td><td><input name="aadPaperItems[1].reasion" type="text" class="txt" maxlength=80/></td></tr>
+					<tr>
+						<td>任免岗位</td>
+						<td>
+							<select name="" onchange="AcadmySelectChange(this)">
+								<option value="" selected>未选择</option>
+								<c:forEach items="${organizations }" var="org">
+									<c:if test="${org.parentCode == '01' }">
+										<option value="${org.code }">${org.name }</option>
+									</c:if>
+								</c:forEach>
+							</select>院/处<br />
+							<select name="" onchange="DepartmentSelectChange(this)">
+								<option selected>未选择</option>
+							</select>系/科 &nbsp
+							<select name="aadPaperItems[0].positionId" onchange="positionSelectChange(this)">
+							</select>
+						</td>
+					</tr>
+					<tr class="grade">
+						<td>任免级别</td>
+						<td>
+							<select name="aadPaperItems[0].grade">
+								<option value="" selected>未选择</option>
+								<c:forEach items="${ide:getAllItems('positionLevel')}" var="pl">
+									<option value="${pl.key }">${pl.value }</option>
+								</c:forEach>
+							</select>
+						</td>
+					</tr>
+					<tr class="actionDay">
+						<td>任免时间</td>
+						<td>
+							<input name="aadPaperItems[0].actionDay" type="text" class="txt time Wdate required"  onfocus="WdatePicker({readOnly:false})" />
+						</td>
+					</tr>
+					<tr><td>备注</td><td><textarea name="aadPaperItems[0].remark" id="remark" maxlength=2000></textarea></td></tr>
+				</table>
+			</div>
+			<div class="extenceInfo dismiss" id="dismissRSC" index="-1" style="display:none">
+				<div class="exTitle">
+					<strong>人员任免信息(免)</strong>
+					<span onclick="deleteDismiss(this)">移除</span>
+					
+					<span class="toggleTag" style="float:right">缩起↑</span>
+				</div>
+				<table class="exInfo" cellspacing="0">
+					<tr id="sec" >
+						<td>任免人员</td>
+						<td>
+							<input name="" type="text" class="txt required" onfocus="userNameBlur(this)" onkeyup="userNameBlur(this)"/>
+							<label></label>
+							<div class="absoluteDiv ml60"></div>
+							<input type="hidden" class="userId" name="aadPaperItems[1].userId"/>
+						</td>
+					</tr>
+					<tr class="appointOrRemove"><td>任免</td>
+						<td>
+							<label>免职</label>
+							<input type="hidden" name="aadPaperItems[1].appointOrRemove" value="2" />
+								
+						</td></tr>
+					<tr><td>任免类型</td>
+						<td>
+							<select name="aadPaperItems[1].type">
+								<option value="" selected>请选择</option>
+								<c:forEach items="${ide:getAllItems('postAndDissType') }" var="pt">
+									<option value="${pt.key }">${pt.value }</option>
+								</c:forEach>			
+							</select>
+						</td></tr>
+					<tr><td>任免原因</td><td><input name="aadPaperItems[1].reasion" type="text" class="txt" maxlength=80/></td></tr>
+					<tr>
+						<td>任免岗位</td>
+						<td class="position">
+							<select name="aadPaperItems[1].positionId"></select>
+						</td>
+					</tr>
+					<tr class="actionDay">
+						<td>任免时间</td>
+						<td>
+							<input name="aadPaperItems[0].actionDay" type="text" class="txt time Wdate required"  onfocus="WdatePicker({readOnly:false})" />
+						</td>
+					</tr>
+					<tr><td>备注</td><td><textarea name="aadPaperItems[1].remark" id="remark" maxlength=2000></textarea></td></tr>
+				</table>
+			</div>
+		<div class="tb_box">
+		
+		<form id="addForm" method="post" action="${ctx}/AppointAndDismiss/AppointAndDismissInfo/Aadadd.do">
+			<div class="requiredInfo">
+				<div class="reTitle"><strong>任免文件信息(<font color="red">必填</font>)</strong></div>
+				<table class="basicInfo" cellspacing="0">
+					<tr>
+						<td>任免类型</td>
+						<td >
+							<select name="workingType">
+								<option value="" selected>未选择</option>
+								<c:forEach items = "${ide:getAllItems('workingPaperType') }" var="wpt">
+									<option value="${wpt.key }">${wpt.value }</option>
+								</c:forEach>
+							</select>
+							
+						</td>
+					</tr>
+					<tr>
+						<td>发文文号</td>
+						<td >
+							<input id="postingNumber" name="postingNumber" type="text" class="txt required" />
+						</td>
+					</tr>
+					<tr>
+						<td>发文名称</td>
+						<td >
+							<input id="postingName" name="postingName" type="text" class="txt required" />
+						</td>
+					</tr>
+					<tr>
+						<td>发文时间</td>
+						<td>
+							<input id="postingDay" name="postingDay" type="text" class="txt time Wdate required"  onfocus="WdatePicker({readOnly:false})" />
+						</td>
+					</tr>
+					<tr><td>备注</td><td ><input id="remark" name="remark" type="text" class="txt required" /></td></tr>
+
+				</table>
+				<label><a id="addAppointment" href="javascript:void(0);">添加任职信息</a></label>
+				<label><a id="addDismiss" href="javascript:void(0);">添加免职信息</a></label>
+				
+			</div>
+			<div class="extenceContainer"></div>
+			<div class="tb_sub_btns">
+				<input type="submit" value="确定" class="add" id="saveBtn" /> 
+				<input type="button" value="取消" class="cancel" onClick="art.dialog.close()" />
+			</div>
+		</form>
+		
+		</div>
+		<script type="text/javascript">
+		function bindSaveBtnEvent(){
+/*  		$("#saveBtn").click(function(){
+ 			var data = $("#addForm").serialize();
+						$.post("${ctx}/AppointAndDismiss/AppointAndDismissInfo/Aadadd.do", data,
+								function(result) {
+									 if("success" == result) {
+				    				art.dialog.opener.location.reload();
+				                	art.dialog.close();   }            
+									else if( "fail"==result){
+				       
+				                    art.dialog.tips("保存失败!");
+				                }
+								});
+					}); */
+		}
+
+		function changeDismiss(){			
+			$(".extenceInfo > table").slideUp();
+			$(".extenceInfo").find(".toggleTag").html("展开↓");
+			$(".extenceInfo:last > table").slideDown();
+			$(".extenceInfo:last").find(".toggleTag").html("缩起↑");
+			bindToggleTagEvent();
+			
+		}
+		function bindToggleTagEvent(){
+			$(".extenceInfo:last").find(".toggleTag").click(function(){
+				if ($(this).parent().parent().find("table").css("display") == "none"){
+					$(this).parent().parent().find("table").slideDown();
+					$(this).html("缩起↑");
+				}else {
+					
+					$(this).parent().parent().find("table").slideUp();
+					$(this).html("展开↓");
+				}
+			});
+		}
+		function deleteDismiss(thiz)
+			{
+				
+				$(thiz).parent().parent().remove();
+				
+			}
+		
+		function AcadmySelectChange(obj){
+			var thiz = $(obj);	
+			var html = "<option value='' selected>请选择</option>";
+			if (thiz.val() == "") {
+				thiz.parent().find("select[name='positonDepartment']").html(html);
+				return;
+			}
+			$.post("${ctx}/sys/organization/queryChildByCode.do", {
+				code : thiz.val()
+			}, function(result) {
+				var org;
+				for ( var i = 0; i < result.length; i++) {
+					org = result[i];
+					html += "<option value='"+org.code+"'>"
+							+ org.name + "</option>";
+				}
+				thiz.nextAll("select:first").html(html);
+			}, "json");
+			
+		}
+		/* 系级单位改变事件*/
+		function DepartmentSelectChange(obj){
+			var thiz = $(obj);
+			var html = "<option value='' selected>请选择</option>";
+			if (thiz.val() == '') {
+				thiz.parent().find("input[name='positionId']").html(html);
+				return;
+			}
+			$.post("${ctx}/position/queryPositionByDept.do", {
+				code : thiz.val()
+			}, function(result) {
+				var position;
+				for ( var i = 0; i < result.length; i++) {
+					position = result[i];
+					html += "<option value='"+position.id+"'>"
+							+ position.positionName + "(" + position.positionLevelName + ")</option>";
+				}
+
+				thiz.nextAll("select:first").html(html);
+			}, "json");
+		}
+		
+		/* 任免人员*/
+	function userNameBlur(obj){
+		var thiz = $(obj);
+		var user = thiz.val();
+		var index = thiz.parent().parent().attr("index");
+   		if (user == "") return;
+   		$.post("${ctx}/infoManager/userInfo/existUserName.do",{userName:user },function(result){
+   			if(null == result || 0 == result.length){
+   				thiz.parent().find("div").html("");
+   				thiz.parent().find("label").html("该人员不存在");
+   				thiz.parent().find(".selectName").remove();
+   			}
+   			if (1 == result.length){
+   				if (result[0].name == user){
+	   				thiz.parent().find("div").html("");
+	   				thiz.parent().find("label").html("正确");
+	   				thiz.parent().find("input[name='userId']").val(result[0].id);
+	   				thiz.parent().find(".selectName").remove();
+   				} else {
+	   				var htmlStr="<ul class='selectName'>";
+	   				for (var i =0;i<result.length;i++){
+						htmlStr += "<li><a href='javascript:showUser("+result[i].id+")'>" + result[i].name + "</a><input type='button' onclick=\"chooseUser("+result[i].id+",'"+result[i].name+"',this)\" value='选择'/></li>";        				
+	   				}
+	   				htmlStr += "</ul>";
+	   				thiz.parent().find("div").html(htmlStr);
+	   			}
+   				
+   			}   	
+   			else if (result.length>1){
+   				var htmlStr="<ul class='selectName'>";
+   				for (var i =0;i<result.length;i++){
+					htmlStr += "<li><a href='javascript:showUser("+result[i].id+")'>" + result[i].name + "</a><input type='button' onclick=\"chooseUser("+result[i].id+",'"+result[i].name+"',this)\" value='选择'/></li>";        				
+   				}
+   				htmlStr += "</ul>";
+   				thiz.parent().find("div").html(htmlStr);
+   			}
+   			thiz.bind("blur.hide",function(){
+				thiz.parent().find("div").html('');
+			});
+			thiz.parent().find("div").hover(function(){//进入失去函数绑定
+				thiz.unbind("blur.hide");
+			},function(){//出去获取函数绑定
+				thiz.bind("blur.hide",function(){
+					thiz.parent().find("div").html('');
+				});
+			});
+   		},"json");
+	}
+	function positionSelectChange(obj){
+	var thiz = $(obj);
+	if ("" == thiz.val())
+		thiz.parent().parent().find(".grade > select ").val("");
+	$.post("${ctx}/position/queryPositionById.do", {
+				code : thiz.val()
+			}, function(result) {
+				var position = result;
+				thiz.parent().parent().parent().find(".grade select ").val(result.positionLevel);
+			}, "json");
+			
+	}
+	 function showUser(id){
+       	//用户详情
+
+	
+		
+		art.dialog.open(
+			"${ctx}/infoManager/userInfo/openUserDetail.do?id="+id,
+			{ title: "用户详情", lock: true, width: 996, height: 600 }
+		);				
+
+
+       }
+        function chooseUser(id,name,obj){
+	     	var thiz = $(obj);
+	     	var td = thiz.parent().parent().parent().parent();
+	     	td.find(":text").val(name);
+	     	td.find(".userId").val(id);
+	       	td.find("label").html("正确");
+	       	td.find("div").html("");
+	       	if (td.parent().parent().parent().parent().hasClass("dismiss")) {
+	       		$.post("${ctx}/AppointAndDismiss/AppointAndDismissInfo/queryPositionByUserId.do"
+	       		,{userId:id}
+	       		,function(result){
+	       			var position;
+	       			if (result.length == 0) {
+	       				art.dialog.alert("此人无岗位");
+	       			}
+	       			else {
+	       				var html = "<option selected>未选择</option>";
+	       				for (var i = 0 ;i < result.length ; i++) {
+	       					position = result[i];
+	       					html += "<option value= '"+position.id+"'>" + position.positionName + "(" + position.departmentName + ")</option>";
+	       				}
+	       				td.parent().parent().find(".position > select").html(html);
+	       			}	
+	       		},"json");
+	       	}
+	       	
+	       
+       	
+       }
+       function bindAddAppointmentEvent(){
+       		$("#addAppointment").click(function(){    		
+       			var div= $("#appointRSC");
+				var newDiv = div.clone(true);
+				var count = 1;
+				var counts = new Array();
+				$(".extenceInfo").each(function(){
+					counts[$(this).attr("index")] = $(this).attr("index"); 
+				});
+				var flag = 1;
+				for (count = 0;;count++){
+					flag = 1;
+					for (var x in counts){
+						if (counts[x] == count){
+							flag = 0;
+							break;
+						}
+					}
+					if (flag == 1)
+						break;
+				}
+				var replaceString = "aadPaperItems["+count+"]";
+				var regx = /aadPaperItems\[\d\]/g;
+				newDiv.html(newDiv.html().replace(regx,replaceString));
+				newDiv.attr("index",count);
+				newDiv.css("display","inline");
+				$(".extenceContainer").append(newDiv);
+				changeDismiss();
+       		});
+       }
+       
+       function bindAddDismissEvent(){
+     	  $("#addDismiss").click(function(){
+       			var div= $("#dismissRSC");
+				var newDiv = div.clone(true);
+				var count = 1;
+				var counts = new Array();
+				$(".extenceInfo").each(function(){
+					counts[$(this).attr("index")] = $(this).attr("index"); 
+				});
+				var flag = 1;
+				for (count = 0;;count++){
+					flag = 1;
+					for (var x in counts){
+						if (counts[x] == count){
+							flag = 0;
+							break;
+						}
+					}
+					if (flag == 1)
+						break;
+				}
+				var replaceString = "aadPaperItems["+count+"]";
+				var regx = /aadPaperItems\[\d\]/g;
+				newDiv.html(newDiv.html().replace(regx,replaceString));
+				newDiv.attr("index",count);
+				newDiv.css("display","inline");
+				$(".extenceContainer").append(newDiv);
+				changeDismiss();
+       		});
+       }
+ 	$(function(){
+	 	bindToggleTagEvent();
+	 	bindAddAppointmentEvent();
+	 	bindAddDismissEvent();
+ 	});
+ 	</script>
+</body>
+</html>

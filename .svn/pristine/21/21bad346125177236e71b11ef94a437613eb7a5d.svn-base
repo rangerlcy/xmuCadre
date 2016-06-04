@@ -1,0 +1,40 @@
+package com.cadre.controller.sys;
+
+import java.util.List;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cadre.pojo.Place;
+import com.cadre.service.sys.PlaceService;
+
+@Controller
+public class PlaceController {
+	private Logger logger = LogManager.getLogger(PlaceController.class);
+	@Autowired
+	PlaceService placeService;
+	
+	/**
+	 * 根据省份查城市
+	 * @param code
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping("/sys/place/queryChildByCode")
+	@ResponseBody
+	public List<Place> queryChildByCode(String code) throws Exception {
+		try {
+			return placeService.queryChildByCode(code);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	
+}
+

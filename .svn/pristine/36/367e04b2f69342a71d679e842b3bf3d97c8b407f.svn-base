@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="xmuCadre"
+  id="myeclipse.1412744558023"
+  context-root="/xmuCadre"
+  j2ee-spec="6.0"
+  archive="xmuCadre.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
